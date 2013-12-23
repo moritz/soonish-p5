@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+use 5.014;
+use warnings;
+use autodie;
+
+use JSON qw/decode_json/;
+
+my $config = do {
+    open my $IN, '<', 'config.json';
+    local $/;
+    my $json = <$IN>;
+    close $IN;
+    decode_json $json;
+};
+my $db = $config->{db};
+
+my $cmd = shift @ARGV;
+if (!defined($cmd)) {
+    exec 'psql', '-h', $db->{host},
+                 '-U', $db->{user},
+                 $db->{name};
+}
+elsif ($cmd eq 'dump') {
+    exec 'pg_dump', '-h', $db->{host},
+                 '-U', $db->{user},
+                 @ARGV,
+                 $db->{name};
+}
+elsif ($cmd eq 'init') {
+    system 'psql', '-h', $db->{host},
+                 '-U', $db->{user},
+                 '-f', 'sql/schema.sql',
+                 $db->{name};
+    ;
+}

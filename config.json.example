@@ -1,0 +1,8 @@
+{
+    "db": {
+        "name": "soonish",
+        "host": "localhost",
+        "user": "soonish",
+        "password": "verysecret"
+    }
+}
