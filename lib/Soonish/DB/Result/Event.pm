@@ -54,7 +54,9 @@ sub formatted_date {
     my $date = $self->start_date;
     1 while $date =~ s/:00$//;
     $date =~ s/\s+$//;
-    $date .= 'h' unless $date =~ /:/;
+    unless ($date =~ s/ 00$//) {
+        $date .= 'h';
+    }
     return $date;
 }
 

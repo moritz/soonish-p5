@@ -53,14 +53,15 @@ $dom->find('tr div')->each(sub {
         };
         warn $@ if $@;
         say $buy_url if $buy_url;
-        if ($rest =~ m{<p>(.*)\n(.*?), (\d+) .*?\| \w+, (\d+)\.(\d+).(\d+), (\d+) Uhr}) {
-            my ($loc_name, $address, $zip) = ($1, $2, $3);
-            my $date = "$6-$5-$4 $7:00";
+        if ($rest =~ m{<p>(.*)\n(.*?), (\d+) (.*?)\s*\| \w+, (\d+)\.(\d+).(\d+), (\d+) Uhr}) {
+            my ($loc_name, $address, $zip, $city) = ($1, $2, $3, $4);
+            my $date = "$7-$6-$5 $8:00";
             return if length($zip) != 5;
             my $location = $schema->location->find_or_create({
                 name    => $loc_name,
                 address => $address,
                 zipcode => $zip,
+                city    => $city,
             });
             $event = $schema->event->create({
                 provider    => $provider->id,

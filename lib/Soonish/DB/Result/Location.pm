@@ -20,6 +20,9 @@ __PACKAGE__->add_columns(
     address => {
         is_nullable         => 0,
     },
+    city => {
+        is_nullable         => 0,
+    },
     zipcode => {
         is_nullable         => 0,
     },
@@ -32,11 +35,5 @@ __PACKAGE__->set_primary_key('id');
 __PACKAGE__->add_unique_constraint([ qw/name address zipcode/] );
 
 __PACKAGE__->belongs_to(geo => 'Soonish::DB::Result::Geo', 'zipcode');
-
-sub city {
-    my $self = shift;
-    my $geo = $self->geo;
-    return $geo ? $geo->city : '(unbekannte Stadt)';
-}
 
 1;

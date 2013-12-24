@@ -32,7 +32,7 @@ sub close_to {
         {
             prefetch => [
                 'artist',
-                {location => 'geo'},
+                'location',
             ],
             order_by => {
                 -asc => 'start_date',

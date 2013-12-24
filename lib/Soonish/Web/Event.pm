@@ -26,7 +26,7 @@ sub list {
                 limit => 100,
                 prefetch => [
                     'artist',
-                    { location => 'geo', },
+                    'location',
                 ],
                 order_by => {
                     -asc => 'start_date',
