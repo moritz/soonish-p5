@@ -49,4 +49,13 @@ __PACKAGE__->belongs_to(location => 'Soonish::DB::Result::Location', 'location')
 __PACKAGE__->belongs_to(artist => 'Soonish::DB::Result::Artist', 'artist');
 __PACKAGE__->belongs_to(provider => 'Soonish::DB::Result::Provider', 'provider');
 
+sub formatted_date {
+    my $self = shift;
+    my $date = $self->start_date;
+    1 while $date =~ s/:00$//;
+    $date =~ s/\s+$//;
+    $date .= 'h' unless $date =~ /:/;
+    return $date;
+}
+
 1;

@@ -1,0 +1,26 @@
+artists:
+    wallerts:
+        name: Die Wallerts
+        url: http://diewallerts.de/
+concerts:
+    - internal_id: wallerts-20140118
+      artist: wallerts
+      name: Eine Hand beschmutzt die andere.
+      start_date: 2014-01-18
+      url: http://diewallerts.de/konzerte/linse-459.html
+      location:
+        name: Linse
+        address: An der Parkaue 25
+        zipcode: 10367
+        city: Berlin
+        url: http://sozdia.de/Linse-a-d-P.112.0.html
+    - internal_id: wallerts-20140301
+      artist: wallerts
+      name: Feierstarter
+      start_date: 2014-03-01
+      url: http://diewallerts.de/konzerte/waschhaus-potsdam-456.html
+      location:
+        name: Waschhaus Potsdam
+        address: Schiffbauergasse 6
+        zipcode: 14467
+        city: Potsdam

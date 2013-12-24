@@ -7,7 +7,8 @@ CREATE TABLE location (
     id      SERIAL       PRIMARY KEY NOT NULL,
     name    VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
-    zipcode INTEGER      NOT NULL,
+    zipcode VARCHAR(5)   NOT NULL,
+    city    VARCHAR(255) NOT NULL,
     url     VARCHAR(255),
     UNIQUE(name, address, zipcode)
 );

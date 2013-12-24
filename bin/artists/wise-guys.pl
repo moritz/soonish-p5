@@ -56,6 +56,7 @@ $dom->find('tr div')->each(sub {
         if ($rest =~ m{<p>(.*)\n(.*?), (\d+) .*?\| \w+, (\d+)\.(\d+).(\d+), (\d+) Uhr}) {
             my ($loc_name, $address, $zip) = ($1, $2, $3);
             my $date = "$6-$5-$4 $7:00";
+            return if length($zip) != 5;
             my $location = $schema->location->find_or_create({
                 name    => $loc_name,
                 address => $address,
