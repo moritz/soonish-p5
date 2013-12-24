@@ -1,6 +1,15 @@
 % title 'Events';
 % layout 'default';
 
+% if (my $close_to = stash('close_to')) {
+    <h2>Veranstaltungen in der Nähe von <%= $close_to->zipcode %>
+        <%= $close_to->city %></h2>
+    <p>Im Umkreis von ca. <%= $distance %> Kilometern.</p>
+% }
+% else {
+    <h2>Veranstaltungen</h2>
+% }
+
 <ul>
 % for my $e (@$events) {
     <li>
@@ -21,7 +30,6 @@
             %= link_to 'Tickets kaufen', $buy_url;
         % }
     </li>
-
 % }
 </ul>
 
