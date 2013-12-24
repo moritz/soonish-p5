@@ -40,6 +40,7 @@ for my $c (@{ $data->{concerts} }) {
             artist      => $artists{ $c->{artist} }->id,
             start_date  => $c->{start_date},
             url         => $c->{url},
+            name        => $c->{name},
         },
     );
     say $event;
