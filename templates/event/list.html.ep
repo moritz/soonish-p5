@@ -25,9 +25,9 @@
             </a>
         % }
         in <%= $e->location->name; %>, <%=
-            $e->location->zipcode %> <%= $e->location->city %>
+            $e->location->zipcode %> <%= $e->location->city %>.
         % if (my $buy_url = $e->buy_url) {
-            %= link_to 'Tickets kaufen', $buy_url;
+            %= link_to 'Tickets kaufen.', $buy_url;
         % }
     </li>
 % }
