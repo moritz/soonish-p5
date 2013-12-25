@@ -2,14 +2,12 @@
     % title 'Events';
     % layout 'default';
 
-    % if (my $close_to = stash('close_to')) {
-        <h2>Veranstaltungen in der Nähe von <span class="show-plz"><%= $close_to->zipcode %></span>
-            <span class="show-city"><%= $close_to->city %></span></h2>
-        <p>Im Umkreis von ca. <span class="show-distance"><%= $distance %></span> Kilometern.</p>
-    % }
-    % else {
-        <h2>Veranstaltungen</h2>
-    % }
+    <h2 id="loc-head1">Veranstaltungen</h2>
+    <div id="loc-head2" style="display:none">
+        <h2>Veranstaltungen in der Nähe von <span class="show-plz"></span>
+            <span class="show-city"></span></h2>
+        <p>Im Umkreis von ca. <span class="show-distance"></span> Kilometern.</p>
+    </div>
 
     <div class="param-select">
     <form id="param-select-form">

@@ -14,6 +14,7 @@ sub startup {
     my $r = $self->routes;
 
     $r->get('/')->to('event#list');
+    $r->get('/zipcode')->to('zipcode#query');
 }
 
 1;
