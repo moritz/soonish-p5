@@ -31,15 +31,19 @@ for my $c (@{ $data->{concerts} }) {
     });
     next if $event;
     my $l = $c->{location};
-    $l->{$_} = decode_utf8 $l->{$_} for keys %$l;
+    use Data::Dumper;
+    $Data::Dumper::Useqq = 1;
+    print Dumper $l;
     my $location = $schema->location->find_or_create($l);
     $event = $schema->event->create(
         {
             provider    => $provider->id,
+            internal_id => $internal_id,
             location    => $location->id,
             artist      => $artists{ $c->{artist} }->id,
             start_date  => $c->{start_date},
             url         => $c->{url},
+            buy_url     => $c->{buy_url},
             name        => $c->{name},
         },
     );
