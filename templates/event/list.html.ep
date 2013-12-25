@@ -24,6 +24,7 @@
         <fieldset>
             Im Umkreis von <input id="distance" name="distance" type="text" value="<%= $distance // 50 %>" size=5 /> km
         </fieldset>
+        <input type="button" id="sbmt" value="Aktualisieren">
     </form>
     </div>
 

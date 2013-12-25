@@ -28,4 +28,5 @@ $(document).ready(function() {
     $('#plz').change(update_list);
     $('#distance').change(update_list);
     $('#artist').change(update_list);
+    $('#sbmt').click(update_list);
 });
