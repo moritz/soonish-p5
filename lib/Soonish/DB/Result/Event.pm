@@ -41,6 +41,10 @@ __PACKAGE__->add_columns(
     buy_url         => {
         is_nullable         => 1,
     },
+    created         => {
+        is_nullable         => 0,
+        retrieve_on_insert  => 1,
+    },
 );
 
 __PACKAGE__->set_primary_key('id');

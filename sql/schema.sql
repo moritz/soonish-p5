@@ -10,19 +10,22 @@ CREATE TABLE location (
     zipcode VARCHAR(5)   NOT NULL,
     city    VARCHAR(255) NOT NULL,
     url     VARCHAR(255),
+    created     TIMESTAMP    NOT NULL DEFAULT NOW(),
     UNIQUE(name, address, zipcode)
 );
 
 CREATE TABLE artist (
     id          SERIAL       PRIMARY KEY NOT NULL,
     name        VARCHAR(255) NOT NULL UNIQUE,
-    url         VARCHAR(255)
+    url         VARCHAR(255),
+    created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE provider (
     id          SERIAL       PRIMARY KEY NOT NULL,
     name        VARCHAR(255) NOT NULL UNIQUE,
-    description TEXT
+    description TEXT,
+    created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE event (
@@ -35,5 +38,6 @@ CREATE TABLE event (
     internal_id VARCHAR(255),
     url         VARCHAR(255),
     buy_url     VARCHAR(255),
+    created     TIMESTAMP    NOT NULL DEFAULT NOW(),
     UNIQUE(provider, internal_id)
 );
