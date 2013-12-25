@@ -43,6 +43,8 @@ function update_list() {
     else {
         $distance.removeClass('invalid');
     }
+    if (!valid)
+        return;
 
     var url = '/?ajax=1;' + $('#param-select-form').serialize();
     $.get(url, function(res) {
