@@ -3,6 +3,7 @@ use Mojo::Base 'Mojolicious::Controller';
 use utf8;
 use 5.014;
 use warnings;
+use Data::Dumper;
 
 sub list {
     my $self = shift;
@@ -10,11 +11,13 @@ sub list {
     my $distance = $self->param('distance') // 50;
     $self->stash(distance => $distance);
     $self->stash(ajax => 1) if $self->param('ajax');
+    my @artists = $self->param('artist');
     my @events;
     if ($zipcode) {
         @events = $self->model->event->close_to(
             zipcode     => $zipcode,
             distance    => $distance,
+            artists     => @artists ? \@artists : undef,
         );
         $self->stash(close_to => $self->model->resultset('Geo')->find($zipcode));
     }
