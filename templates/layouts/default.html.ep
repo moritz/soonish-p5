@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head><title><%= title %></title></head>
-  <body><%= content %></body>
+    <head><title><%= title %></title>
+        %= stylesheet '/select2/select2.css';
+        %= stylesheet '/style.css';
+    </head>
+  <body><%= content %>
+
+  %= javascript '/mojo/jquery/jquery.js';
+  %= javascript '/select2/select2.min.js';
+  %= javascript '/select2/select2_locale_de.js';
+  %= javascript '/dynamic.js';
+  </body>
 </html>

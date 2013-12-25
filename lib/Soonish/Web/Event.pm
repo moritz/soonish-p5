@@ -7,8 +7,9 @@ use warnings;
 sub list {
     my $self = shift;
     my $zipcode  = $self->param('plz');
-    my $distance = $self->param('d') // 50;
+    my $distance = $self->param('distance') // 50;
     $self->stash(distance => $distance);
+    $self->stash(ajax => 1) if $self->param('ajax');
     my @events;
     if ($zipcode) {
         @events = $self->model->event->close_to(
@@ -37,7 +38,18 @@ sub list {
         )->all;
     }
     $self->stash(events => \@events);
+    $self->_artist_sel();
     $self->render();
 };
+
+sub _artist_sel {
+    my $self = shift;
+    my @a;
+    my @artists = $self->model->artist->search(undef, { order_by => 'name'})->all;
+    for (@artists) {
+        push @a, [$_->name, $_->id];
+    }
+    $self->stash(artists_sel => \@a);
+}
 
 1;

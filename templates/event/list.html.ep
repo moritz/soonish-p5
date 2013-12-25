@@ -1,16 +1,36 @@
-% title 'Events';
-% layout 'default';
+% unless (stash 'ajax') {
+    % title 'Events';
+    % layout 'default';
 
-% if (my $close_to = stash('close_to')) {
-    <h2>Veranstaltungen in der Nähe von <%= $close_to->zipcode %>
-        <%= $close_to->city %></h2>
-    <p>Im Umkreis von ca. <%= $distance %> Kilometern.</p>
-% }
-% else {
-    <h2>Veranstaltungen</h2>
-% }
+    % if (my $close_to = stash('close_to')) {
+        <h2>Veranstaltungen in der Nähe von <%= $close_to->zipcode %>
+            <%= $close_to->city %></h2>
+        <p>Im Umkreis von ca. <span class="dist"><%= $distance %></span> Kilometern.</p>
+    % }
+    % else {
+        <h2>Veranstaltungen</h2>
+    % }
 
+    <div class="param-select">
+    <form id="param-select-form">
+        <fieldset>
+            Künstler: <br>
+            %= select_field artist => $artists_sel, multiple => 1, class => 'select2', id => 'artist';
+        </fieldset>
+        <fieldset>
+            Postleitzahl: <input id="plz" name="plz" type="text" size=5 value="<%=
+            stash('close_to') && stash('close_to')->zipcode %>"  />
+        </fieldset>
+        <fieldset>
+            Im Umkreis von <input id="distance" name="distance" type="text" value="<%= $distance // 50 %>" size=5 /> km
+        </fieldset>
+    </form>
+    </div>
+
+    <div id="eventlist">
+% }
 <ul>
+
 % for my $e (@$events) {
     <li>
         % my $url = $e->url;
@@ -33,4 +53,8 @@
     </li>
 % }
 </ul>
+
+% unless (stash 'ajax') {
+    </div>
+% }
 
