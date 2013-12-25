@@ -1,5 +1,4 @@
 function update_list() {
-    console.log('update_list');
     var $plz = $('#plz');
     var plz  = $plz.val();
     var valid = true;
@@ -15,12 +14,9 @@ function update_list() {
         $distance.addClass('invalid');
     }
     var url = '/?ajax=1;' + $('#param-select-form').serialize();
-    console.log(url);
     $.get(url, function(res) {
-        console.log('Callback!');
-        console.log(res);
         $('#eventlist').html(res);
-        $('.dist').html(distance);
+        $('.show-distance').html(distance);
     });
 }
 $(document).ready(function() {

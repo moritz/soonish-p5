@@ -3,9 +3,9 @@
     % layout 'default';
 
     % if (my $close_to = stash('close_to')) {
-        <h2>Veranstaltungen in der Nähe von <%= $close_to->zipcode %>
-            <%= $close_to->city %></h2>
-        <p>Im Umkreis von ca. <span class="dist"><%= $distance %></span> Kilometern.</p>
+        <h2>Veranstaltungen in der Nähe von <span class="show-plz"><%= $close_to->zipcode %></span>
+            <span class="show-city"><%= $close_to->city %></span></h2>
+        <p>Im Umkreis von ca. <span class="show-distance"><%= $distance %></span> Kilometern.</p>
     % }
     % else {
         <h2>Veranstaltungen</h2>
