@@ -12,19 +12,23 @@ sub close_to {
     $param{distance} //= 50;
     $param{distance} *= 1000;
 
-
-    my $subsel = $self->result_source->schema->resultset('GeoProximity')->search(
-        undef,
-        {
-            bind => [$param{zipcode}, $param{distance}],
-        }
-    )->as_query;
-
     my %search = (
-        'location.zipcode' => { IN =>  $subsel },
         start_date => { '>='    => \'NOW()', },
     );
-    $search{'artist.id'} = { IN => $param{artists} } if $param{artists};
+
+    if ($param{zipcode}) {
+        my $subsel = $self->result_source->schema->resultset('GeoProximity')->search(
+            undef,
+            {
+                bind => [$param{zipcode}, $param{distance}],
+            }
+        )->as_query;
+        $search{'location.zipcode'} = { IN =>  $subsel };
+    }
+
+    if ($param{artists} &&  @{ $param{artists} }) {
+        $search{'artist.id'} = { IN => $param{artists} };
+    }
 
     $self->search(
         \%search,
@@ -38,7 +42,6 @@ sub close_to {
             }
         }
     );
-
 }
 
 

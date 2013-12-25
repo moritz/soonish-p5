@@ -12,35 +12,11 @@ sub list {
     $self->stash(distance => $distance);
     $self->stash(ajax => 1) if $self->param('ajax');
     my @artists = $self->param('artist');
-    my @events;
-    if ($zipcode) {
-        @events = $self->model->event->close_to(
-            zipcode     => $zipcode,
-            distance    => $distance,
-            artists     => @artists ? \@artists : undef,
-        );
-        $self->stash(close_to => $self->model->resultset('Geo')->find($zipcode));
-    }
-    else {
-        @events   = $self->model->event->search(
-            {
-                start_date => {
-                    '>='    => \'NOW()',
-                },
-                @artists ? ( 'artist.id' => { IN => \@artists } ) : (),
-            },
-            {
-                limit => 100,
-                prefetch => [
-                    'artist',
-                    'location',
-                ],
-                order_by => {
-                    -asc => 'start_date',
-                },
-            },
-        )->all;
-    }
+    my @events = $self->model->event->close_to(
+        zipcode     => $zipcode,
+        distance    => $distance,
+        artists     => \@artists,
+    );
     $self->stash(events => \@events);
     $self->_artist_sel();
     $self->render();
