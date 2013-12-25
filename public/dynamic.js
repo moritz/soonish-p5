@@ -11,7 +11,6 @@ function auto_show_plz() {
         return;
     }
     $.get('/zipcode?zipcode=' + plz, function (res) {
-        console.log('in ajax response');
         plz_cache[plz] = res.city;
         show_plz(plz, res.city);
     }, 'json');
@@ -58,4 +57,5 @@ $(document).ready(function() {
     $('#artist').change(update_list);
     $('#sbmt').click(update_list);
     auto_show_plz();
+    $('.show-distance').html($('#distance').val());
 });
