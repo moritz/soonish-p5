@@ -27,6 +27,7 @@ sub list {
                 start_date => {
                     '>='    => \'NOW()',
                 },
+                @artists ? ( 'artist.id' => { IN => \@artists } ) : (),
             },
             {
                 limit => 100,
