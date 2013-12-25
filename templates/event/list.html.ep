@@ -15,8 +15,9 @@
     <li>
         % my $url = $e->url;
         % if ($url) {
-            <a href="<%= $url %>"><%= $e->artist->name %>,
+            <a href="<%= $url %>">
         % }
+        <%= $e->artist->name %>,
         % if (my $name = $e->name) {
             "<%= $name %>",
         % }
