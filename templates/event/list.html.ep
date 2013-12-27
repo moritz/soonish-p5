@@ -9,23 +9,34 @@
         <p>Im Umkreis von ca. <span class="show-distance"></span> Kilometern.</p>
     </div>
 
-    <div class="param-select">
     <form id="param-select-form">
-        <fieldset>
-            Künstler: <br>
-            %= select_field artist => $artists_sel, multiple => 1, class => 'select2', id => 'artist';
-        </fieldset>
-        <fieldset>
-            Postleitzahl: <input id="plz" name="plz" type="text" size=5 value="<%=
-            stash('plz') %>"  />
-        </fieldset>
-        <fieldset>
-            Im Umkreis von <input id="distance" name="distance" type="text" value="<%= $distance // 50 %>" size=5 /> km
-        </fieldset>
-        <input type="button" id="sbmt" value="Aktualisieren">
+    <table class="param-select">
+        <tr>
+            <td><label for="artists">Künstler:</label></td>
+            <td>
+                %= select_field artist => $artists_sel, multiple => 1, class => 'select2', id => 'artist';
+            </td>
+        </tr>
+        <tr>
+            <td> <label for="plz">Postleitzahl:</label></td>
+            <td>
+                <input id="plz" name="plz" type="text" size=5 value="<%= stash('plz') %>"  />
+            </td>
+        </tr>
+        <tr>
+            <td> Im Umkreis von</td>
+            <td> <input id="distance" name="distance" type="text" value="<%=
+            $distance // 50 %>" size=5 /> km</td>
+        </tr>
+        <tr>
+            <td />
+            <td>
+                <input type="button" id="sbmt" value="Aktualisieren">
+            </td>
+        </tr>
+    </table>
     </form>
-        <p>Feed-URL: <code><a href="#" class="show-feed-url"></a></code></p>
-    </div>
+    <p>Feed-URL: <code><a href="#" class="show-feed-url"></a></code></p>
 
     <div id="eventlist">
 % }

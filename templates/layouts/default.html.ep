@@ -4,7 +4,12 @@
         %= stylesheet '/select2/select2.css';
         %= stylesheet '/style.css';
     </head>
-  <body><%= content %>
+    <body>
+    <noscript>
+        <p><strong>Diese Seite braucht Javascript, um richtig zu
+            funktionieren!</strong></p>
+    </noscript>
+    <%= content %>
 
   %= javascript '/mojo/jquery/jquery.js';
   %= javascript '/select2/select2.min.js';
