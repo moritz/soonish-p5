@@ -38,6 +38,14 @@ function show_feed_url() {
     }
     $('a.show-feed-url').attr('href', url);
     $('a.show-feed-url').html(url);
+    var $link = $('head [rel="alternate"]');
+    if ($link.length) {
+        $link.attr('href', url);
+    }
+    else {
+        $('head').append('<link rel="alternate" type="application/atom+xml" href="'
+                + url + '" title="Atom 1.0 feed" />');
+    }
 }
 function update_list() {
     var $plz = $('#plz');
