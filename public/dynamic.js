@@ -10,10 +10,20 @@ function auto_show_plz() {
         show_plz(plz, plz_cache[plz]);
         return;
     }
-    $.get('/zipcode?zipcode=' + plz, function (res) {
-        plz_cache[plz] = res.city;
-        show_plz(plz, res.city);
-    }, 'json');
+    $.ajax({
+        url: '/zipcode?zipcode=' + plz,
+        dataType: 'json',
+        success:  function (res) {
+            plz_cache[plz] = res.city;
+            $('#plz').removeClass('invalid');
+            $('.plz-error').html('');
+            show_plz(plz, res.city);
+        },
+        error: function (res) {
+            $('#plz').addClass('invalid');
+            $('.plz-error').html(res.responseJSON.error);
+        }
+    });
 };
 function show_plz(plz, city) {
     $('.show-plz').html(plz);
@@ -24,7 +34,11 @@ function show_plz(plz, city) {
 function show_feed_url() {
     var loc = document.location;
     var url = loc.protocol + '//' + loc.host + '/feed/atom?';
-    var artists = $('#artist').val().sort(function (a, b) { return a - b }).join(',');
+    var artists = $('#artist').val();
+    if (!artists) {
+        artists = []
+    }
+    artists = artists.sort(function (a, b) { return a - b }).join(',');
     if (artists.length > 0) {
         url = url + 'a=' + artists + ';'
     }

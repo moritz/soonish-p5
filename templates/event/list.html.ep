@@ -21,6 +21,7 @@
             <td> <label for="plz">Postleitzahl:</label></td>
             <td>
                 <input id="plz" name="plz" type="text" size=5 value="<%= stash('plz') %>"  />
+                <span class="plz-error error"></span>
             </td>
         </tr>
         <tr>
@@ -40,30 +41,36 @@
 
     <div id="eventlist">
 % }
-<ul>
 
-% for my $e (@$events) {
-    <li>
-        % my $url = $e->url;
-        % if ($url) {
-            <a href="<%= $url %>">
-        % }
-        <%= $e->artist->name %>,
-        % if (my $name = $e->name) {
-            "<%= $name %>",
-        % }
-        <%= $e->formatted_date; %>
-        % if ($url) {
-            </a>
-        % }
-        in <%= $e->location->name; %>, <%=
-            $e->location->zipcode %> <%= $e->location->city %>.
-        % if (my $buy_url = $e->buy_url) {
-            %= link_to 'Tickets kaufen.', $buy_url;
-        % }
-    </li>
+% if (@$events) {
+    <ul>
+    % for my $e (@$events) {
+        <li>
+            % my $url = $e->url;
+            % if ($url) {
+                <a href="<%= $url %>">
+            % }
+            <%= $e->artist->name %>,
+            % if (my $name = $e->name) {
+                "<%= $name %>",
+            % }
+            <%= $e->formatted_date; %>
+            % if ($url) {
+                </a>
+            % }
+            in <%= $e->location->name; %>, <%=
+                $e->location->zipcode %> <%= $e->location->city %>.
+            % if (my $buy_url = $e->buy_url) {
+                %= link_to 'Tickets kaufen.', $buy_url;
+            % }
+        </li>
+    % }
+    </ul>
 % }
-</ul>
+% else {
+    <p class="no-results">Keine Ergebnisse gefunden</p>
+
+% }
 
 % unless (stash 'ajax') {
     </div>
