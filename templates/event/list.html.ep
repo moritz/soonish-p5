@@ -17,13 +17,14 @@
         </fieldset>
         <fieldset>
             Postleitzahl: <input id="plz" name="plz" type="text" size=5 value="<%=
-            stash('close_to') && stash('close_to')->zipcode %>"  />
+            stash('plz') %>"  />
         </fieldset>
         <fieldset>
             Im Umkreis von <input id="distance" name="distance" type="text" value="<%= $distance // 50 %>" size=5 /> km
         </fieldset>
         <input type="button" id="sbmt" value="Aktualisieren">
     </form>
+        <p>Feed-URL: <code><a href="#" class="show-feed-url"></a></code></p>
     </div>
 
     <div id="eventlist">

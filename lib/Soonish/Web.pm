@@ -15,7 +15,7 @@ sub startup {
 
     $r->get('/')->to('event#list');
     $r->get('/zipcode')->to('zipcode#query');
-    $r->get('/atom/:z/:d/:a')->to('feed#atom');
+    $r->get('/feed/atom')->to('feed#atom');
 }
 
 1;

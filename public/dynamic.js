@@ -21,6 +21,24 @@ function show_plz(plz, city) {
     $('#loc-head2').show();
     $('#loc-head1').hide();
 }
+function show_feed_url() {
+    var loc = document.location;
+    var url = loc.protocol + '//' + loc.host + '/feed/atom?';
+    var artists = $('#artist').val().sort(function (a, b) { return a - b }).join(',');
+    if (artists.length > 0) {
+        url = url + 'a=' + artists + ';'
+    }
+    var plz = $('#plz').val();
+    if (plz.length == 5) {
+        url = url + 'z=' + plz + ';'
+    }
+    var distance = $('#distance').val();
+    if (distance.length > 0) {
+        url = url + 'd=' + distance;
+    }
+    $('a.show-feed-url').attr('href', url);
+    $('a.show-feed-url').html(url);
+}
 function update_list() {
     var $plz = $('#plz');
     var plz  = $plz.val();
@@ -50,6 +68,7 @@ function update_list() {
     $.get(url, function(res) {
         $('#eventlist').html(res);
         $('.show-distance').html(distance);
+        show_feed_url();
     });
 }
 $(document).ready(function() {
@@ -60,4 +79,5 @@ $(document).ready(function() {
     $('#sbmt').click(update_list);
     auto_show_plz();
     $('.show-distance').html($('#distance').val());
+    show_feed_url();
 });

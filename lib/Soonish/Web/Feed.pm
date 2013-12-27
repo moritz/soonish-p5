@@ -7,8 +7,9 @@ use Data::UUID;
 sub atom {
     my $self        = shift;
     my @artists     = grep /^\d+\z/, split /\,/, $self->param('a') // '';
+    my $url         = $self->req->url;
     my $zipcode     = $self->param('z');
-    my $distance    = $self->param('d');
+    my $distance    = $self->param('d') // 50;
 
     my $canonical = join('/',
         $zipcode // '',
@@ -18,10 +19,28 @@ sub atom {
     my $duid = Data::UUID->new();
     my $feed_id = $duid->to_string($duid->create_from_name('https://github.com/moritz/soonish-p5/', $canonical));
 
+    my $link = $url->clone;
+    $link->path('/');
+    $link->query(
+        artist      => \@artists,
+        plz         => $zipcode // '',
+        distance    => $distance,
+    );
+
+    my $title;
+    if ($zipcode && (my $geo = $self->model->geo->find({plz99 => $zipcode}))) {
+        $title = sprintf 'Veranstaltungen bei %05d %s (%d km)',
+            $zipcode, $geo->city, $distance;
+    }
+    else {
+        $title = 'Veranstaltungen';
+    }
+
     my $feed = XML::Atom::SimpleFeed->new(
-        title   => "Umkreissuche nach Events",
+        title   => $title,
         author  => 'Moritz Lenz',
         id      => $feed_id,
+        link    => $link->to_abs,
     );
 
     my @events = $self->model->event->close_to(
