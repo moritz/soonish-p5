@@ -56,6 +56,14 @@ sub atom {
         push @name_chunks, $e->formatted_date;
         push @name_chunks, 'am', $e->location->zipcode, $e->location->city;
 
+        my $l = $link->clone();
+        $l->path('/');
+        $l->query(
+            artist   => $e->artist->id,
+            distance => 1,
+            plz      => $e->location->zipcode,
+        );
+
         $feed->add_entry(
             title => join(' ', @name_chunks),
             link  => $e->url // $e->buy_url // 'http://example.org/',
