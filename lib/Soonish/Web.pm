@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Soonish qw/model config/;
+use Soonish qw/model/;
 
 # This method will run once at server start
 sub startup {
@@ -16,7 +16,7 @@ sub startup {
         state $model = model();
     });
 
-    $self->secrets(config 'secret');
+    $self->secrets(Soonish::config('secret'));
 
     # Router
     my $r = $self->routes;
