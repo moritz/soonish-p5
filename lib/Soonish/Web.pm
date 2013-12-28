@@ -1,6 +1,12 @@
 package Soonish::Web;
 use Mojo::Base 'Mojolicious';
-use Soonish qw/model/;
+
+use 5.014;
+use strict;
+use warnings;
+use utf8;
+
+use Soonish qw/model config/;
 
 # This method will run once at server start
 sub startup {
@@ -9,6 +15,8 @@ sub startup {
     $self->helper(model => sub {
         state $model = model();
     });
+
+    $self->secrets(config 'secret');
 
     # Router
     my $r = $self->routes;
