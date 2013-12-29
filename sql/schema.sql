@@ -8,6 +8,7 @@ CREATE TABLE location (
     name    VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
     zipcode VARCHAR(5)   NOT NULL,
+    country INTEGER      NOT NULL REFERENCES country (id),
     city    VARCHAR(255) NOT NULL,
     url     VARCHAR(255),
     created     TIMESTAMP    NOT NULL DEFAULT NOW(),

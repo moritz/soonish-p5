@@ -7,7 +7,7 @@ use Exporter qw/import/;
 use JSON qw/decode_json/;
 use Carp qw/croak/;
 
-our @EXPORT_OK = qw/config model/;
+our @EXPORT_OK = qw/config model get_dbh/;
 
 sub config {
     state $config = do {
