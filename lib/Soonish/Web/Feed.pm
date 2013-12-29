@@ -4,6 +4,20 @@ use Mojo::Base 'Mojolicious::Controller';
 use XML::Atom::SimpleFeed;
 use Data::UUID;
 
+sub uuid {
+    my ($ns, $val) = @_;
+    state $duid = Data::UUID->new();
+
+    return $duid->to_string(
+        $duid->to_string(
+            $duid->create_from_name(
+                'https://github.com/moritz/soonish-p5/' . ($ns // ''),
+                $val,
+            ),
+        ),
+    );
+}
+
 sub atom {
     my $self        = shift;
     my @artists     = grep /^\d+\z/, split /\,/, $self->param('a') // '';
@@ -16,8 +30,7 @@ sub atom {
         $distance // '',
         join(',', sort { $a <=> $b } @artists),
     );
-    my $duid = Data::UUID->new();
-    my $feed_id = $duid->to_string($duid->create_from_name('https://github.com/moritz/soonish-p5/', $canonical));
+    my $feed_id = uuid('', $canonical);
 
     my $link = $url->clone;
     $link->path('/');
@@ -68,6 +81,7 @@ sub atom {
             title => join(' ', @name_chunks),
             link  => $e->url // $e->buy_url // 'http://example.org/',
             category => $e->artist->name,
+            id    => uuid('event', $e->id),
         );
     }
     $self->render(text => $feed->as_string, format => 'atom');
