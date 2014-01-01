@@ -9,6 +9,7 @@ use Soonish qw/model/;
 use Mojo::URL;
 
 my $schema = model();
+my $country = $schema->country->find({ cc2 => 'de' });
 
 my $provider = $schema->provider->find({ name => 'Wise Guys Crawler' });
 unless ($provider) {
@@ -62,6 +63,7 @@ $dom->find('tr div')->each(sub {
                 address => $address,
                 zipcode => $zip,
                 city    => $city,
+                country => $country->id,
             });
             $event = $schema->event->create({
                 provider    => $provider->id,

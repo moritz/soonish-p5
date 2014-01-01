@@ -31,6 +31,7 @@ for my $c (@{ $data->{concerts} }) {
     });
     next if $event;
     my $l = $c->{location};
+    $l->{country} = $schema->country->find({ cc2 => ($l->{country} || 'de')})->id;
     use Data::Dumper;
     $Data::Dumper::Useqq = 1;
     print Dumper $l;

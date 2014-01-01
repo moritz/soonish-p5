@@ -10,6 +10,7 @@ use Soonish qw/model/;
 use Mojo::URL;
 
 my $schema = model();
+my $country = $schema->country->find({cc2 => 'de'});
 
 my $provider = $schema->provider->find_or_create({ name => 'Reinhard Mey Crawler' });
 
@@ -66,6 +67,7 @@ sub scrape {
         address => $address,
         zipcode => $zipcode,
         city    => $city,
+        country => $country->id,
     });
     $event = $schema->event->create({
         provider    => $provider->id,

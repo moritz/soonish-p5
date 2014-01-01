@@ -21,6 +21,8 @@ unless ($artist) {
     });
 }
 
+my $country = $schema->country->find({cc2 => 'de'});
+
 use Mojo::UserAgent;
 my $ua = Mojo::UserAgent->new;
 my $url = 'http://www.salutsalon.de/05-tour-1.php';
@@ -53,6 +55,7 @@ $dom->at('td.inhalt')->find('table')->each(sub {
         address => $address,
         zipcode => $plz,
         city    => $city,
+        country => $country->id,
     });
     $event = $schema->event->create({
         provider    => $provider->id,
