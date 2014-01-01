@@ -10,8 +10,8 @@
             funktionieren!</strong></p>
     </noscript>
     <p class="header">
-        % if ( defined(session '_persona') && (session '_persona')->{'status'} eq 'okay' ) {
-        %     my $email = (session '_persona')->{'email'};
+        % if ( defined(stash 'login') ) {
+        %     my $email = stash('login')->email;
             <a href="#" class="persona-button" id="personaSignout"><span><%= $email %> abmelden</span></a>
         % } else {
             <a href="#" class="persona-button" id="personaSignin"><span>Anmelden mit Ihrer E-Mail-Adresse</span></a>

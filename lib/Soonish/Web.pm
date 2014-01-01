@@ -30,12 +30,14 @@ sub startup {
         my $c = shift;
         if ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay') {
             my $login_rs = $c->model->login;
-            my $email = $c->session('_persona')->{email};
-            my $user  = $login_rs->find(
+            my $email    = $c->session('_persona')->{email};
+            my $login    = $login_rs->find(
                 { email => $email },
                 { prefetch => { artist_login => 'artist' } },
             ) || $login_rs->create({ email => $email });
+            $c->stash(login => $login);
         }
+        return 1;
     });
 
     $r->get('/')->to('event#list');
