@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS provider;
 DROP TABLE IF EXISTS artist;
 DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS login;
 
 CREATE TABLE location (
     id      SERIAL       PRIMARY KEY NOT NULL,
@@ -41,4 +42,11 @@ CREATE TABLE event (
     buy_url     VARCHAR(255),
     created     TIMESTAMP    NOT NULL DEFAULT NOW(),
     UNIQUE(provider, internal_id)
+);
+
+CREATE TABLE login (
+    id          SERIAL       PRIMARY KEY NOT NULL,
+    email       VARCHAR(255) NOT NULL UNIQUE,
+    nonce       INTEGER      NOT NULL UNIQUE DEFAULT (random() * 2147483647)::Integer,
+    created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
