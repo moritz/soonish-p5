@@ -24,3 +24,9 @@ fieldset { border: none }
 .no-results {
     font-weight: bold
 }
+.header {
+    text-align: right;
+}
+body {
+    max-width: 70em;
+}

@@ -12,11 +12,18 @@ use Soonish qw/model/;
 sub startup {
     my $self = shift;
 
+    $self->plugin(
+        moz_persona => {
+            audience => 'http://127.0.0.1:3000/',
+            siteName => 'Umkreissuche nach Events',
+        }
+    );
+
     $self->helper(model => sub {
         state $model = model();
     });
 
-    $self->secrets(Soonish::config('secret'));
+    $self->secrets([Soonish::config('secret')]);
 
     # Router
     my $r = $self->routes;
