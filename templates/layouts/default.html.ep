@@ -14,7 +14,7 @@
         %     my $email = (session '_persona')->{'email'};
             <a href="#" class="persona-button" id="personaSignout"><span><%= $email %> abmelden</span></a>
         % } else {
-            <a href="#" class="persona-button" id="personaSignin"><span>Anmelden mit Ihrer Email</span></a>
+            <a href="#" class="persona-button" id="personaSignin"><span>Anmelden mit Ihrer E-Mail-Adresse</span></a>
         % }
     </p>
 

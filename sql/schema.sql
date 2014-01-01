@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS artist_login;
 DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS provider;
 DROP TABLE IF EXISTS artist;
@@ -5,7 +6,7 @@ DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS login;
 
 CREATE TABLE location (
-    id      SERIAL       PRIMARY KEY NOT NULL,
+    id      SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     name    VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
     zipcode VARCHAR(5)   NOT NULL,
@@ -17,21 +18,21 @@ CREATE TABLE location (
 );
 
 CREATE TABLE artist (
-    id          SERIAL       PRIMARY KEY NOT NULL,
+    id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     name        VARCHAR(255) NOT NULL UNIQUE,
     url         VARCHAR(255),
     created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE provider (
-    id          SERIAL       PRIMARY KEY NOT NULL,
+    id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     name        VARCHAR(255) NOT NULL UNIQUE,
     description TEXT,
     created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE event (
-    id          SERIAL       PRIMARY KEY NOT NULL,
+    id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     name        VARCHAR(255),
     location    INTEGER      NOT NULL REFERENCES location (id),
     artist      INTEGER      NOT NULL REFERENCES artist (id),
@@ -45,8 +46,17 @@ CREATE TABLE event (
 );
 
 CREATE TABLE login (
-    id          SERIAL       PRIMARY KEY NOT NULL,
+    id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
     nonce       INTEGER      NOT NULL UNIQUE DEFAULT (random() * 2147483647)::Integer,
+    zipcode     VARCHAR(5),
+    distance    REAL,
     created     TIMESTAMP    NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE artist_login (
+    id          SERIAL      PRIMARY KEY UNIQUE NOT NULL,
+    artist      INTEGER     NOT NULL REFERENCES artist (id),
+    login       INTEGER     NOT NULL REFERENCES login  (id),
+    UNIQUE(login, artist)
 );

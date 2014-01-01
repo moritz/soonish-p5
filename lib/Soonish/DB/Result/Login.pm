@@ -17,7 +17,7 @@ __PACKAGE__->add_columns(
     email   => {
         is_nullable         => 0,
     },
-    none => {
+    nonce => {
         is_nullable         => 0,
         retrieve_on_insert  => 1,
         data_type           => 'integer',
@@ -30,5 +30,7 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key('id');
+__PACKAGE__->has_many(artist_login => 'Soonish::DB::Result::ArtistLogin', 'login');
+__PACKAGE__->many_to_many(artists => artist_login => 'artist');
 
 1;
