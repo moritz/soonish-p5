@@ -1,4 +1,4 @@
-package Soonish::DB::Result::ArtistLogin;
+package Soonish::DB::Result::ChannelLogin;
 
 use 5.014;
 use warnings;
@@ -6,7 +6,7 @@ use utf8;
 
 use parent qw/DBIx::Class::Core/;
 
-__PACKAGE__->table('artist_login');
+__PACKAGE__->table('channel_login');
 __PACKAGE__->add_columns(
     id => {
         data_type           => 'integer',
@@ -14,7 +14,7 @@ __PACKAGE__->add_columns(
         is_numeric          => 1,
         retrieve_on_insert  => 1,
     },
-    artist   => {
+    channel   => {
         is_nullable         => 0,
     },
     login   => {
@@ -23,8 +23,8 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key('id');
-__PACKAGE__->add_unique_constraint(artist_login => ['artist', 'login']);
-__PACKAGE__->belongs_to(artist => 'Soonish::DB::Result::Artist', 'artist');
-__PACKAGE__->belongs_to(login  => 'Soonish::DB::Result::Login',  'login');
+__PACKAGE__->add_unique_constraint(artist_login => ['channel', 'login']);
+__PACKAGE__->belongs_to(channel => 'Soonish::DB::Result::Channel', 'channel');
+__PACKAGE__->belongs_to(login   => 'Soonish::DB::Result::Login',   'login');
 
 1;

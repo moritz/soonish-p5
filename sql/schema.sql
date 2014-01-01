@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS artist_login;
+DROP TABLE IF EXISTS artist_channel;
+DROP TABLE IF EXISTS channel;
 DROP TABLE IF EXISTS event;
 DROP TABLE IF EXISTS provider;
 DROP TABLE IF EXISTS artist;
@@ -48,15 +49,23 @@ CREATE TABLE event (
 CREATE TABLE login (
     id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
-    nonce       INTEGER      NOT NULL UNIQUE DEFAULT (random() * 2147483647)::Integer,
-    zipcode     VARCHAR(5),
-    distance    REAL,
     created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE artist_login (
+CREATE TABLE channel (
+    id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
+    name        VARCHAR(255) NOT NULL,
+    login       INTEGER      NOT NULL REFERENCES login (id),
+    nonce       INTEGER      NOT NULL UNIQUE DEFAULT (random() * 2147483647)::Integer,
+    zipcode     VARCHAR(5),
+    country     INTEGER     REFERENCES country (id),
+    distance    REAL,
+    UNIQUE(name, login)
+);
+
+CREATE TABLE artist_channel (
     id          SERIAL      PRIMARY KEY UNIQUE NOT NULL,
-    artist      INTEGER     NOT NULL REFERENCES artist (id),
-    login       INTEGER     NOT NULL REFERENCES login  (id),
-    UNIQUE(login, artist)
+    artist      INTEGER     NOT NULL REFERENCES artist  (id),
+    channel     INTEGER     NOT NULL REFERENCES channel (id),
+    UNIQUE(artist, channel)
 );

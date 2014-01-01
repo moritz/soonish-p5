@@ -31,10 +31,9 @@ sub startup {
         if ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay') {
             my $login_rs = $c->model->login;
             my $email    = $c->session('_persona')->{email};
-            my $login    = $login_rs->find(
+            my $login    = $login_rs->find_or_create(
                 { email => $email },
-                { prefetch => { artist_login => 'artist' } },
-            ) || $login_rs->create({ email => $email });
+            );
             $c->stash(login => $login);
         }
         return 1;

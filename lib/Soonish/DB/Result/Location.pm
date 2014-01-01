@@ -26,6 +26,9 @@ __PACKAGE__->add_columns(
     zipcode => {
         is_nullable         => 0,
     },
+    country => {
+        is_nullable         => 0,
+    },
     url => {
         is_nullable         => 1,
     },

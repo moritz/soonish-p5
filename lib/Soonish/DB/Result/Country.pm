@@ -20,5 +20,8 @@ __PACKAGE__->add_columns(
     },
 );
 __PACKAGE__->set_primary_key('id');
+__PACKAGE__->add_unique_constraint(name => ['name']);
+__PACKAGE__->add_unique_constraint(cc2 => ['cc2']);
+__PACKAGE__->add_unique_constraint(cc3 => ['cc3']);
 
 1;
