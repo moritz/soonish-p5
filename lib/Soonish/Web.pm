@@ -41,6 +41,7 @@ sub startup {
 
     $r->get('/')->to('event#list');
     $r->get('/zipcode')->to('zipcode#query');
+    $r->get('/proximity')->to('zipcode#proximity');
     $r->get('/feed/atom')->to('feed#atom');
 }
 

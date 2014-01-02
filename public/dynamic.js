@@ -99,6 +99,25 @@ $(document).ready(function() {
     $('#distance').change(update_list);
     $('#artist').change(update_list);
     $('#sbmt').click(update_list);
+    if ($('#plz').val().length == 0 && navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (loc) {
+                var c = loc.coords;
+                $.get('/proximity?lat=' + c.latitude + ';lon=' + c.longitude,
+                    function (res) {
+                        if (res.zipcode) {
+                            $('#plz').val(res.zipcode);
+                            update_list();
+                        }
+                    },
+                    'json'
+                );
+            },
+            function (e) {
+                console.log('Geolocation lookup failed');
+            }
+        );
+    }
     auto_show_plz();
     $('.show-distance').html($('#distance').val());
     show_feed_url();
