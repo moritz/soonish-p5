@@ -7,7 +7,6 @@ function auto_show_zipcode() {
     var zipcode = $('#zipcode').val();
     var country = $('#country').val();
     var cache_key = [country, zipcode].join('/');
-    console.log('Cache key: ' + cache_key);
     if (zipcode.length == 0) {
         $('#loc-head1').show();
         $('#loc-head2').hide();
