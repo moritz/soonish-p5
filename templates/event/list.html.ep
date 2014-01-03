@@ -41,6 +41,12 @@
                 <input type="button" id="sbmt" value="Aktualisieren">
             </td>
         </tr>
+        % if (stash('login')) {
+            <tr>
+                <td><label for="channel-name">Suche mit Namen</label></td>
+                <td><input name="channel-name" id="channel-name" size="10" /> <input type="button" value="abspeichern" id="save-channel" /> <span class="channel-save-notify"></span></td>
+            </tr>
+        % }
     </table>
     </form>
     <p>Feed-URL: <code><a href="#" class="show-feed-url"></a></code></p>

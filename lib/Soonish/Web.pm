@@ -50,6 +50,8 @@ sub startup {
     $r->get('/zipcode')->to('zipcode#query');
     $r->get('/proximity')->to('zipcode#proximity');
     $r->get('/feed/atom')->to('feed#atom');
+
+    $r->post('/channel/save')->to('channel#save');
 }
 
 1;

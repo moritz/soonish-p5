@@ -11,5 +11,6 @@ sub location { $_[0]->resultset('Location') }
 sub geo      { $_[0]->resultset('Geo'     ) }
 sub login    { $_[0]->resultset('Login'   ) }
 sub country  { $_[0]->resultset('Country' ) }
+sub channel  { $_[0]->resultset('Channel' ) }
 
 1;

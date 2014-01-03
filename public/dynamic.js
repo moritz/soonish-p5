@@ -100,8 +100,25 @@ function update_list() {
         show_feed_url();
     });
 }
+
+function save_channel() {
+    var url = '/channel/save?' + $('#param-select-form').serialize();
+    $.ajax(
+
+        url,
+        {
+            type: 'POST',
+            accepts: 'json',
+            success: function (res) {
+                $('.channel-save-notify').html('Als Suche "' + res.name + '" gespeichert.');
+            }
+        }
+    );
+}
+
 $(document).ready(function() {
     $('.select2').select2();
+    $('#save-channel').click(save_channel);
     $('#zipcode').change(update_list);
     $('#distance').change(update_list);
     $('#artist').change(update_list);
