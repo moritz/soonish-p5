@@ -4,11 +4,13 @@ TODO:
         + modify existings channels
         + delete channel
         + channel feeds
+    * prettier layout
     * unified input/search field for city/country/zipcode
     * overview pages per
         + artist
         + location
         + zipcode
+    * apply at partner programs
 
 DONE:
     * basic multi-country search

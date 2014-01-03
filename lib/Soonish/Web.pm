@@ -14,7 +14,7 @@ sub startup {
 
     $self->plugin(
         moz_persona => {
-            audience => 'http://127.0.0.1:3000/',
+            audience => Soonish::config('site_url'),
             siteName => 'Umkreissuche nach Events',
             autoHook => {
                 css     => 1,
