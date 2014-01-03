@@ -16,6 +16,13 @@ sub startup {
         moz_persona => {
             audience => 'http://127.0.0.1:3000/',
             siteName => 'Umkreissuche nach Events',
+            autoHook => {
+                css     => 1,
+                persona => 1,
+                local   => 1,
+                uid     => 1,
+                jquery  => 0,
+            },
         }
     );
 
