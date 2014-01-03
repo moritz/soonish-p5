@@ -8,14 +8,15 @@ use warnings;
 sub query {
     my $self = shift;
     my $zipcode = $self->param('zipcode');
+    my $country = $self->param('country') // 1;
     unless ($zipcode =~ /^\d{4,5}$/) {
         $self->render(status => 404, json => { error => 'Ungültige Postleitzahl' });
         return;
     }
-    my $z = $self->model->resultset('Geo')->find({plz99 => $zipcode});
+    my $z = $self->model->resultset('Geo')->search({plz99 => $zipcode, country => $country})->first;
     if ($z) {
         $self->render(
-            json => { zipcode => $zipcode, city => $z->city },
+            json => { zipcode => $zipcode, city => $z->city, country => $country, },
         );
     }
     else {
