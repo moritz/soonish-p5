@@ -1,6 +1,6 @@
 TODO:
     * channels:
-        + give a search a name, thus creating a channel
+        + list channels
         + modify existings channels
         + delete channel
         + channel feeds
@@ -13,5 +13,8 @@ TODO:
     * apply at partner programs
 
 DONE:
+    * channels:
+        + give a search a name, thus creating a channel
+
     * basic multi-country search
     * proximity search by zipcode
