@@ -1,4 +1,8 @@
 var zipcode_cache = {};
+function zipcode_valid_length () {
+    var expected = $('#country').val() == 1 ? 5 : 4;
+    return $('#zipcode').val().length == expected;
+}
 function auto_show_zipcode() {
     var zipcode = $('#zipcode').val();
     if (zipcode.length == 0) {
@@ -42,8 +46,9 @@ function show_feed_url() {
     if (artists.length > 0) {
         url = url + 'a=' + artists + ';'
     }
+    url = url + 'c=' + $('#country').val() + ';';
     var zipcode = $('#zipcode').val();
-    if (zipcode.length == 5) {
+    if (zipcode_valid_length()) {
         url = url + 'z=' + zipcode + ';'
     }
     var distance = $('#distance').val();
@@ -65,7 +70,7 @@ function update_list() {
     var $zipcode = $('#zipcode');
     var zipcode  = $zipcode.val();
     var valid = true;
-    if (zipcode.length == 0 || zipcode.length == 5) {
+    if (zipcode.length == 0 || zipcode_valid_length()) {
         $zipcode.removeClass('invalid');
         auto_show_zipcode();
     }
@@ -98,6 +103,7 @@ $(document).ready(function() {
     $('#zipcode').change(update_list);
     $('#distance').change(update_list);
     $('#artist').change(update_list);
+    $('#country').change(update_list);
     $('#sbmt').click(update_list);
     if ($('#zipcode').val().length == 0 && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(

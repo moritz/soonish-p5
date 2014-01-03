@@ -22,10 +22,12 @@ sub atom {
     my $self        = shift;
     my @artists     = grep /^\d+\z/, split /\,/, $self->param('a') // '';
     my $url         = $self->req->url;
+    my $country     = $self->param('c') // 1;
     my $zipcode     = $self->param('z');
     my $distance    = $self->param('d') // 50;
 
     my $canonical = join('/',
+        $country,
         $zipcode // '',
         $distance // '',
         join(',', sort { $a <=> $b } @artists),
@@ -57,6 +59,7 @@ sub atom {
     );
 
     my @events = $self->model->event->close_to(
+        country     => $country,
         zipcode     => $zipcode,
         distance    => $distance,
         artists     => \@artists,

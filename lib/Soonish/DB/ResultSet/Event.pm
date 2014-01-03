@@ -20,7 +20,7 @@ sub close_to {
         my $subsel = $self->result_source->schema->resultset('GeoProximity')->search(
             undef,
             {
-                bind => [$param{zipcode}, $param{distance}],
+                bind => [$param{country} // 1, $param{zipcode}, $param{distance}],
             }
         )->as_query;
         $search{'location.zipcode'} = { IN =>  $subsel };

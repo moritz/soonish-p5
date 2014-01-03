@@ -18,7 +18,7 @@ __PACKAGE__->result_source_instance->is_virtual(1);
 __PACKAGE__->result_source_instance->view_definition(q[
     SELECT geoprox_a.plz99 as zipcode
       FROM post_code_areas geoprox_a, post_code_areas geoprox_b
-     WHERE geoprox_b.plz99 = ?
+     WHERE geoprox_b.country = ? AND geoprox_b.plz99 = ?
            AND ST_Distance(geoprox_a.loc_center, geoprox_b.loc_center, True) <= ?
 ]);
 

@@ -8,7 +8,7 @@ use warnings;
 sub query {
     my $self = shift;
     my $zipcode = $self->param('zipcode');
-    unless ($zipcode =~ /^\d{5}/) {
+    unless ($zipcode =~ /^\d{4,5}$/) {
         $self->render(status => 404, json => { error => 'Ungültige Postleitzahl' });
         return;
     }
