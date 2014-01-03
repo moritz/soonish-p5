@@ -8,11 +8,11 @@ use Data::Dumper;
 sub list {
     my $self = shift;
 
-    my $zipcode  = $self->param('plz');
+    my $zipcode  = $self->param('zipcode');
     my $distance = $self->param('distance') // 50;
     $self->stash(distance => $distance);
     $self->stash(ajax => 1) if $self->param('ajax');
-    $self->stash(plz => $zipcode);
+    $self->stash(zipcode => $zipcode);
     my @artists = $self->param('artist');
     my @events = $self->model->event->close_to(
         zipcode     => $zipcode,

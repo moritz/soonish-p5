@@ -36,7 +36,7 @@ sub atom {
     $link->path('/');
     $link->query(
         artist      => \@artists,
-        plz         => $zipcode // '',
+        zipcode         => $zipcode // '',
         distance    => $distance,
     );
 
@@ -74,7 +74,7 @@ sub atom {
         $l->query(
             artist   => $e->artist->id,
             distance => 1,
-            plz      => $e->location->zipcode,
+            zipcode      => $e->location->zipcode,
         );
 
         $feed->add_entry(

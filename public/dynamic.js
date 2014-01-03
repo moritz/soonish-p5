@@ -1,32 +1,32 @@
-var plz_cache = {};
-function auto_show_plz() {
-    var plz = $('#plz').val();
-    if (plz.length == 0) {
+var zipcode_cache = {};
+function auto_show_zipcode() {
+    var zipcode = $('#zipcode').val();
+    if (zipcode.length == 0) {
         $('#loc-head1').show();
         $('#loc-head2').hide();
         return;
     }
-    if (plz_cache[plz]) {
-        show_plz(plz, plz_cache[plz]);
+    if (zipcode_cache[zipcode]) {
+        show_zipcode(zipcode, zipcode_cache[zipcode]);
         return;
     }
     $.ajax({
-        url: '/zipcode?zipcode=' + plz,
+        url: '/zipcode?zipcode=' + zipcode,
         dataType: 'json',
         success:  function (res) {
-            plz_cache[plz] = res.city;
-            $('#plz').removeClass('invalid');
-            $('.plz-error').html('');
-            show_plz(plz, res.city);
+            zipcode_cache[zipcode] = res.city;
+            $('#zipcode').removeClass('invalid');
+            $('.zipcode-error').html('');
+            show_zipcode(zipcode, res.city);
         },
         error: function (res) {
-            $('#plz').addClass('invalid');
-            $('.plz-error').html(res.responseJSON.error);
+            $('#zipcode').addClass('invalid');
+            $('.zipcode-error').html(res.responseJSON.error);
         }
     });
 };
-function show_plz(plz, city) {
-    $('.show-plz').html(plz);
+function show_zipcode(zipcode, city) {
+    $('.show-zipcode').html(zipcode);
     $('.show-city').html(city);
     $('#loc-head2').show();
     $('#loc-head1').hide();
@@ -42,9 +42,9 @@ function show_feed_url() {
     if (artists.length > 0) {
         url = url + 'a=' + artists + ';'
     }
-    var plz = $('#plz').val();
-    if (plz.length == 5) {
-        url = url + 'z=' + plz + ';'
+    var zipcode = $('#zipcode').val();
+    if (zipcode.length == 5) {
+        url = url + 'z=' + zipcode + ';'
     }
     var distance = $('#distance').val();
     if (distance.length > 0) {
@@ -62,16 +62,16 @@ function show_feed_url() {
     }
 }
 function update_list() {
-    var $plz = $('#plz');
-    var plz  = $plz.val();
+    var $zipcode = $('#zipcode');
+    var zipcode  = $zipcode.val();
     var valid = true;
-    if (plz.length == 0 || plz.length == 5) {
-        $plz.removeClass('invalid');
-        auto_show_plz();
+    if (zipcode.length == 0 || zipcode.length == 5) {
+        $zipcode.removeClass('invalid');
+        auto_show_zipcode();
     }
     else {
         valid = false;
-        $plz.addClass('invalid');
+        $zipcode.addClass('invalid');
     }
 
     var $distance = $('#distance');
@@ -95,18 +95,18 @@ function update_list() {
 }
 $(document).ready(function() {
     $('.select2').select2();
-    $('#plz').change(update_list);
+    $('#zipcode').change(update_list);
     $('#distance').change(update_list);
     $('#artist').change(update_list);
     $('#sbmt').click(update_list);
-    if ($('#plz').val().length == 0 && navigator && navigator.geolocation) {
+    if ($('#zipcode').val().length == 0 && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function (loc) {
                 var c = loc.coords;
                 $.get('/proximity?lat=' + c.latitude + ';lon=' + c.longitude,
                     function (res) {
                         if (res.zipcode) {
-                            $('#plz').val(res.zipcode);
+                            $('#zipcode').val(res.zipcode);
                             update_list();
                         }
                     },
@@ -118,7 +118,7 @@ $(document).ready(function() {
             }
         );
     }
-    auto_show_plz();
+    auto_show_zipcode();
     $('.show-distance').html($('#distance').val());
     show_feed_url();
 });

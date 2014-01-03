@@ -4,7 +4,7 @@
 
     <h2 id="loc-head1">Veranstaltungen</h2>
     <div id="loc-head2" style="display:none">
-        <h2>Veranstaltungen in der Nähe von <span class="show-plz"></span>
+        <h2>Veranstaltungen in der Nähe von <span class="show-zipcode"></span>
             <span class="show-city"></span></h2>
         <p>Im Umkreis von ca. <span class="show-distance"></span> Kilometern.</p>
     </div>
@@ -18,10 +18,10 @@
             </td>
         </tr>
         <tr>
-            <td> <label for="plz">Postleitzahl:</label></td>
+            <td> <label for="zipcode">Postleitzahl:</label></td>
             <td>
-                <input id="plz" name="plz" type="text" size=5 value="<%= stash('plz') %>"  />
-                <span class="plz-error error"></span>
+                <input id="zipcode" name="zipcode" type="text" size=5 value="<%= stash('zipcode') %>"  />
+                <span class="zipcode-error error"></span>
             </td>
         </tr>
         <tr>

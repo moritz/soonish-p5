@@ -43,7 +43,7 @@ $dom->at('td.inhalt')->find('table')->each(sub {
     $time =~ s/\./:/g;
     $isodate .= " $time";
     my $buy_url = $d->at('a.shapelinks')->attr->{href};
-    (my $plz, $city) = split ' ', $city, 2;
+    (my $zipcode, $city) = split ' ', $city, 2;
     my $internal_id = "salutsalon-$isodate";
     my $event = $schema->event->find({
         provider    => $provider->id,
@@ -53,7 +53,7 @@ $dom->at('td.inhalt')->find('table')->each(sub {
     my $location = $schema->location->find_or_create({
         name    => $loc_name,
         address => $address,
-        zipcode => $plz,
+        zipcode => $zipcode,
         city    => $city,
         country => $country->id,
     });
