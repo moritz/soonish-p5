@@ -1,0 +1,10 @@
+% title 'Gespeicherte Suchen';
+% layout 'default';
+
+<ul>
+    % for my $channel (@$channels) {
+        <li class="channel-<%= $channel->id %>"><%= $channel->name; %> 
+            <input type="button" data-id="<%= $channel->id %>" class="remove-channel" value="Suche löschen"/>
+        </li>
+    % }
+</ul>

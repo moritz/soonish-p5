@@ -24,7 +24,7 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id');
 __PACKAGE__->add_unique_constraint(artist_channel => ['artist', 'channel']);
-__PACKAGE__->belongs_to(login   => 'Soonish::DB::Result::Artist',  'artist');
+__PACKAGE__->belongs_to(artist  => 'Soonish::DB::Result::Artist',  'artist');
 __PACKAGE__->belongs_to(channel => 'Soonish::DB::Result::Channel', 'channel');
 
 1;

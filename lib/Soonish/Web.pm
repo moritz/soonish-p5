@@ -51,7 +51,9 @@ sub startup {
     $r->get('/proximity')->to('zipcode#proximity');
     $r->get('/feed/atom')->to('feed#atom');
 
+    $r->get('/channel/list')->to('channel#list');
     $r->post('/channel/save')->to('channel#save');
+    $r->post('/channel/delete')->to('channel#delete');
 }
 
 1;

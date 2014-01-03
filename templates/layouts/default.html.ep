@@ -23,6 +23,6 @@
   %= javascript '/mojo/jquery/jquery.js';
   %= javascript '/select2/select2.min.js';
   %= javascript '/select2/select2_locale_de.js';
-  %= javascript '/dynamic.js';
+  %= javascript stash('extra_js') if stash 'extra_js';
   </body>
 </html>

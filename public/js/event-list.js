@@ -7,7 +7,7 @@ function auto_show_zipcode() {
     var zipcode = $('#zipcode').val();
     var country = $('#country').val();
     var cache_key = [country, zipcode].join('/');
-    if (zipcode.length == 0) {
+    if (!zipcode) {
         $('#loc-head1').show();
         $('#loc-head2').hide();
         return;
@@ -124,7 +124,7 @@ $(document).ready(function() {
     $('#artist').change(update_list);
     $('#country').change(update_list);
     $('#sbmt').click(update_list);
-    if ($('#zipcode').val().length == 0 && navigator && navigator.geolocation) {
+    if (!$('#zipcode').val() && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function (loc) {
                 var c = loc.coords;

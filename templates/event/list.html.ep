@@ -86,5 +86,6 @@
 
 % unless (stash 'ajax') {
     </div>
+    %= javascript '/js/event-list.js';
 % }
 

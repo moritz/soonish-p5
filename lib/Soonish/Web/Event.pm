@@ -35,6 +35,7 @@ sub list {
         $self->_artist_sel();
         $self->_country_sel();
     }
+    $self->stash(extra_js => '/js/event-list.js');
     $self->render();
 };
 
