@@ -1,6 +1,7 @@
 package Soonish::Web::Channel;
 
 use Mojo::Base 'Mojolicious::Controller';
+use Mojo::URL;
 use 5.014;
 use utf8;
 use warnings;
@@ -56,6 +57,7 @@ sub save {
 sub list {
     my $self  = shift;
     my $login = $self->stash('login');
+    my $feed_url = $self->req->url->clone->path('/feed/atom');
     $self->stash(
         channels => [$login->search_related('channels', undef,
             {
@@ -64,6 +66,7 @@ sub list {
             },
         )],
         extra_js => '/js/channel.js',
+        feed_url => $feed_url,
     );
 }
 

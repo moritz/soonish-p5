@@ -2,7 +2,6 @@ TODO:
     * channels:
         + list channels
         + modify existings channels
-        + channel feeds
         + UI safeguard for channel deletion
     * prettier layout
     * unified input/search field for city/country/zipcode
@@ -16,6 +15,7 @@ DONE:
     * channels:
         + give a search a name, thus creating a channel
         + delete channel
+        + channel feeds
 
     * basic multi-country search
     * proximity search by zipcode

@@ -26,8 +26,8 @@ sub close_to {
         $search{'location.zipcode'} = { IN =>  $subsel };
     }
 
-    if ($param{artists} &&  @{ $param{artists} }) {
-        $search{'artist.id'} = { IN => $param{artists} };
+    if ($param{artist} &&  @{ $param{artist} }) {
+        $search{'artist.id'} = { IN => $param{artist} };
     }
 
     $self->search(

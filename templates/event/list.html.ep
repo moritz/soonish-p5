@@ -81,11 +81,9 @@
 % }
 % else {
     <p class="no-results">Keine Ergebnisse gefunden</p>
-
 % }
 
 % unless (stash 'ajax') {
     </div>
-    %= javascript '/js/event-list.js';
 % }
 

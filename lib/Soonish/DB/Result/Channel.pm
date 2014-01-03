@@ -38,6 +38,12 @@ __PACKAGE__->has_many(artist_channel => 'Soonish::DB::Result::ArtistChannel', 'c
 #__PACKAGE__->has_many(artist_login => 'Soonish::DB::Result::ArtistLogin', 'login');
 #__PACKAGE__->many_to_many(artists => artist_login => 'artist');
 
+sub artist_ids {
+    my $self = shift;
+    map $_->get_column('artist'),
+        $self->search_related('artist_channel')->all;
+}
+
 sub set_artists {
     my ($self, $new) = @_;
     unless (@$new) {
@@ -46,9 +52,8 @@ sub set_artists {
     }
     my %exists;
     my @to_add;
-    for ($self->search_related('artist_channel')->all) {
-        $exists{ $_->get_column('artist') } = 1;
-    }
+    my @artists = $self->artist_ids;
+    $exists{@artists} = (1) x @artists;
     for (@$new) {
         if (delete $exists{$_}) {
             # nothing to be done

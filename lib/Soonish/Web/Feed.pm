@@ -20,32 +20,39 @@ sub uuid {
 
 sub atom {
     my $self        = shift;
-    my @artists     = grep /^\d+\z/, split /\,/, $self->param('a') // '';
     my $url         = $self->req->url;
-    my $country     = $self->param('c') // 1;
-    my $zipcode     = $self->param('z');
-    my $distance    = $self->param('d') // 50;
-
+    my %params;
+    if (my $nonce = $self->param('nonce')) {
+        my $channel = $self->model->channel->find({ nonce => $nonce });
+        %params     = (
+            country     => $channel->country,
+            zipcode     => $channel->zipcode,
+            distance    => $channel->distance,
+        );
+        $params{artist} = [ $channel->artist_ids ];
+        use Data::Dumper;
+        print Dumper \%params;
+    }
+    else {
+        $params{artist}  = [grep /^\d+\z/, split /\,/, $self->param('a') // ''];
+        $params{country} = $self->param('c') // 1;
+        $params{zipcode} = $self->param('z') // '';
+        $params{distance}= $self->param('d') // 50;
+    };
     my $canonical = join('/',
-        $country,
-        $zipcode // '',
-        $distance // '',
-        join(',', sort { $a <=> $b } @artists),
+        @params{qw/country zipcode distance/},
+        join(',', sort { $a <=> $b } @{ $params{artist} }),
     );
     my $feed_id = uuid('', $canonical);
 
     my $link = $url->clone;
     $link->path('/');
-    $link->query(
-        artist      => \@artists,
-        zipcode         => $zipcode // '',
-        distance    => $distance,
-    );
+    $link->query(%params);
 
     my $title;
-    if ($zipcode && (my $geo = $self->model->geo->find({plz99 => $zipcode}))) {
+    if ($params{zipcode} && (my $geo = $self->model->geo->find({plz99 => $params{zipcode}}))) {
         $title = sprintf 'Veranstaltungen bei %05d %s (%d km)',
-            $zipcode, $geo->city, $distance;
+            $params{zipcode}, $geo->city, $params{distance};
     }
     else {
         $title = 'Veranstaltungen';
@@ -58,12 +65,7 @@ sub atom {
         link    => $link->to_abs,
     );
 
-    my @events = $self->model->event->close_to(
-        country     => $country,
-        zipcode     => $zipcode,
-        distance    => $distance,
-        artists     => \@artists,
-    );
+    my @events = $self->model->event->close_to( %params );
     for my $e (@events) {
         my @name_chunks = ($e->artist->name);
         if (defined(my $n = $e->name)) {
