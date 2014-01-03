@@ -12,7 +12,8 @@
     <p class="header">
         % if ( defined(stash 'login') ) {
         %     my $email = stash('login')->email;
-            <a href="#" class="persona-button" id="personaSignout"><span><%= $email %> abmelden</span></a>
+            <a href="#" class="persona-button" id="personaSignout"><span><%= $email %> abmelden.</span></a>
+            <a href="/channel/list">Gespeicherte Suchen.</a>
         % } else {
             <a href="#" class="persona-button" id="personaSignin"><span>Anmelden mit Ihrer E-Mail-Adresse</span></a>
         % }
