@@ -1,0 +1,15 @@
+TODO:
+    * channels:
+        + give a search a name, thus creating a channel
+        + modify existings channels
+        + delete channel
+        + channel feeds
+    * unified input/search field for city/country/zipcode
+    * overview pages per
+        + artist
+        + location
+        + zipcode
+
+DONE:
+    * basic multi-country search
+    * proximity search by zipcode
