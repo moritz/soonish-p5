@@ -3,6 +3,11 @@
     <head><title><%= title %></title>
         %= stylesheet '/select2/select2.css';
         %= stylesheet '/style.css';
+        % if ($is_dev) {
+            <style type="text/css">
+                body { background-color: #CCFCFF }
+            </style>
+        % }
     </head>
     <body>
     <noscript>

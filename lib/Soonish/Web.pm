@@ -31,11 +31,13 @@ sub startup {
     });
 
     $self->secrets([Soonish::config('secret')]);
+    my $is_dev = $self->mode eq 'development';
 
     # Router
     my $r = $self->routes->under(sub {
         my $c = shift;
         $c->stash(imprint_url => Soonish::config('imprint_url'));
+        $c->stash(is_dev => $is_dev);
         if ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay') {
             my $login_rs = $c->model->login;
             my $email    = $c->session('_persona')->{email};
