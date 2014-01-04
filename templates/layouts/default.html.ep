@@ -21,6 +21,9 @@
 
     <%= content %>
 
+    <div id="footer">
+        <p><a href="<%= $imprint_url %>">Impressum</a></p>
+    </div>
   %= javascript '/mojo/jquery/jquery.js';
   %= javascript '/select2/select2.min.js';
   %= javascript '/select2/select2_locale_de.js';

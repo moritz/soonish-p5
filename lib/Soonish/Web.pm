@@ -35,6 +35,7 @@ sub startup {
     # Router
     my $r = $self->routes->under(sub {
         my $c = shift;
+        $c->stash(imprint_url => Soonish::config('imprint_url'));
         if ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay') {
             my $login_rs = $c->model->login;
             my $email    = $c->session('_persona')->{email};

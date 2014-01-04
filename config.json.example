@@ -4,5 +4,8 @@
         "host": "localhost",
         "user": "soonish",
         "password": "verysecret"
-    }
+    },
+    "imprint_url": "http://example.com/imprint",
+    "site_url": "http://my-site.example.com/",
+    "secret": "123456789"
 }
