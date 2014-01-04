@@ -25,7 +25,8 @@ fieldset { border: none }
     font-weight: bold
 }
 .header {
-    text-align: right;
+    float: right;
+    margin: 0.3ex;
 }
 body {
     max-width: 70em;
