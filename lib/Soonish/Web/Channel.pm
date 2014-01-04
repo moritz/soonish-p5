@@ -57,6 +57,7 @@ sub save {
 sub list {
     my $self  = shift;
     my $login = $self->stash('login');
+    return $self->_error('Bitte zuerst einloggen') unless $login;
     my $feed_url = $self->req->url->clone->path('/feed/atom');
     $self->stash(
         channels => [$login->search_related('channels', undef,
