@@ -17,7 +17,7 @@ label {
 fieldset { border: none }
 .param-select {
     background-color: #FFD65C;
-    border-radius: 4px;
+    border-radius: 6px;
     border: black 1px;
     margin-left: 1em;
 }
