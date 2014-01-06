@@ -4,7 +4,7 @@
 <h1><%= $artist->name; %></h1>
 
 % if (my $u = $artist->url) {
-    <p>Homepage: <%= link_to $u; %></p>
+    <p>Homepage: <%= link_to $u, $u; %></p>
 % }
 
 <h2>Geplante Konzerte von <%= $artist->name %></h2>
