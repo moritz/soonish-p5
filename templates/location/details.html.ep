@@ -1,0 +1,21 @@
+% title $location->name;
+% layout 'default';
+
+<h1><%= $location->name; %></h1>
+
+<p>Adresse:</p>
+
+<p class="address">
+<%= $location->address; %> <br />
+<%= $location->zipcode; %> <%= $location->city; %> <br />
+<%= $location->country->name; %>
+</p>
+
+
+% if (my $u = $location->url) {
+    <p>Homepage: <%= link_to $u, $u; %></p>
+% }
+
+<h2>Geplante Konzerte in <%= $location->name %></h2>
+
+%= include 'event/list', events => [ $location->future_events->all ], suppress_location => 1,

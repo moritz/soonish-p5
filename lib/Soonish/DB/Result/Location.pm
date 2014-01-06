@@ -39,5 +39,18 @@ __PACKAGE__->add_unique_constraint([ qw/name address zipcode/] );
 
 __PACKAGE__->belongs_to(geo => 'Soonish::DB::Result::Geo', 'zipcode');
 __PACKAGE__->belongs_to(country => 'Soonish::DB::Result::Country', 'country');
+__PACKAGE__->has_many(events => 'Soonish::DB::Result::Event', 'location');
+
+sub future_events {
+    my $self = shift;
+    $self->search_related(
+        'events',
+        { start_date => { '>=', \'NOW()' } },
+        {
+            order_by => 'start_date',
+            prefetch => 'location',
+        },
+    );
+}
 
 1;
