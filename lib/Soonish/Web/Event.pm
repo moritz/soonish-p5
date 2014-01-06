@@ -26,17 +26,14 @@ sub list {
     );
     $self->stash(events => \@events);
     if ($is_ajax) {
-        $self->stash(
-            artists_sel => [],
-            country_sel => [],
-        );
+        $self->render('event/list');
     }
     else {
         $self->_artist_sel();
         $self->_country_sel();
+        $self->stash(extra_js => '/js/event-list.js');
+        $self->render('event/index');
     }
-    $self->stash(extra_js => '/js/event-list.js');
-    $self->render();
 };
 
 sub _artist_sel {

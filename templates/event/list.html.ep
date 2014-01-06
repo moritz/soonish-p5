@@ -1,59 +1,3 @@
-% unless (stash 'ajax') {
-    % title 'Events';
-    % layout 'default';
-
-    <h2 id="loc-head1">Veranstaltungen</h2>
-    <div id="loc-head2" style="display:none">
-        <h2>Veranstaltungen in der Nähe von <span class="show-zipcode"></span>
-            <span class="show-city"></span></h2>
-        <p>Im Umkreis von ca. <span class="show-distance"></span> Kilometern.</p>
-    </div>
-
-    <form id="param-select-form">
-    <table class="param-select">
-        <tr>
-            <td><label for="artists">Künstler:</label></td>
-            <td>
-                %= select_field artist => $artists_sel, multiple => 1, class => 'select2', id => 'artist';
-            </td>
-        </tr>
-        <tr>
-            <td><label for="country">Land:</label></td>
-            <td>
-                %= select_field country => $country_sel, class => 'select2', id => 'country';
-            </td>
-        </tr>
-        <tr>
-            <td> <label for="zipcode">Postleitzahl:</label></td>
-            <td>
-                <input id="zipcode" name="zipcode" type="text" size=5 value="<%= stash('zipcode') %>"  />
-                <span class="zipcode-error error"></span>
-            </td>
-        </tr>
-        <tr>
-            <td> Im Umkreis von</td>
-            <td> <input id="distance" name="distance" type="text" value="<%=
-            $distance // 50 %>" size=5 /> km</td>
-        </tr>
-        <tr>
-            <td />
-            <td>
-                <input type="button" id="sbmt" value="Aktualisieren">
-            </td>
-        </tr>
-        % if (stash('login')) {
-            <tr>
-                <td><label for="channel-name">Suche mit Namen</label></td>
-                <td><input name="channel-name" id="channel-name" size="10" /> <input type="button" value="abspeichern" id="save-channel" /> <span class="channel-save-notify"></span></td>
-            </tr>
-        % }
-    </table>
-    </form>
-    <p>Feed-URL: <code><a href="#" class="show-feed-url"></a></code></p>
-
-    <div id="eventlist">
-% }
-
 % if (@$events) {
     <ul>
     % for my $e (@$events) {
@@ -82,8 +26,3 @@
 % else {
     <p class="no-results">Keine Ergebnisse gefunden</p>
 % }
-
-% unless (stash 'ajax') {
-    </div>
-% }
-
