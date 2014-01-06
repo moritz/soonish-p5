@@ -1,0 +1,30 @@
+% title 'Übersicht über die Künstler';
+% layout 'default';
+
+<h1>Liste der Veranstaltungsorte</h1>
+
+<table>
+<thead>
+    <tr>
+        <th>Name</th>
+        <th>Adresse</th>
+        <th>Webseite</th>
+    </tr>
+</thead>
+<tbody>
+    % for my $l (@$location) {
+        <tr>
+            <td><a href="/location/<%= $l->id %>"><%= $l->name %></a></td>
+            <td>
+                %= join ', ', grep defined, $l->address, join(' ', $l->zipcode, $l->city), $l->country->name;
+            <td>
+            <td>
+            % if (my $u = $l->url) {
+                %= link_to $u, $u;
+            % }
+            </td>
+        </tr>
+    % }
+
+</tbody>
+</table>

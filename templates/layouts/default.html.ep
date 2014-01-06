@@ -28,7 +28,9 @@
 
     <div id="footer">
         <ul>
-            <li><a href="/artist">Alle Künstler</a></li>
+            <li><a href="/">Startseite</a></li>
+            <li><a href="/artist">Künstler</a></li>
+            <li><a href="/location">Veranstaltungsorte</a></li>
             <li><a href="<%= $imprint_url %>">Impressum</a></li>
         </ul>
     </div>

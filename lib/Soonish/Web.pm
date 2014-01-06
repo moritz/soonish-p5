@@ -60,6 +60,9 @@ sub startup {
 
     $r->get('/artist')->to('artist#list');
     $r->get('/artist/:id', [id => qr/\d+/])->to('artist#details');
+
+    $r->get('/location')->to('location#list');
+    $r->get('/location/:id', [id => qr/\d+/])->to('location#details');
 }
 
 1;

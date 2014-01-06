@@ -38,5 +38,6 @@ __PACKAGE__->set_primary_key('id');
 __PACKAGE__->add_unique_constraint([ qw/name address zipcode/] );
 
 __PACKAGE__->belongs_to(geo => 'Soonish::DB::Result::Geo', 'zipcode');
+__PACKAGE__->belongs_to(country => 'Soonish::DB::Result::Country', 'country');
 
 1;
