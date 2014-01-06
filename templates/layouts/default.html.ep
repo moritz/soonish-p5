@@ -27,7 +27,10 @@
     <%= content %>
 
     <div id="footer">
-        <p><a href="<%= $imprint_url %>">Impressum</a></p>
+        <ul>
+            <li><a href="/artist">Alle Künstler</a></li>
+            <li><a href="<%= $imprint_url %>">Impressum</a></li>
+        </ul>
     </div>
   %= javascript '/mojo/jquery/jquery.js';
   %= javascript '/select2/select2.min.js';

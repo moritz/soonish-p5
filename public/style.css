@@ -39,3 +39,11 @@ body {
 #footer a {
     color: white;
 }
+#footer li {
+    display: inline;
+    margin-right: 1ex;
+}
+#footer ul {
+    margin: 2px;
+    padding: 2px;
+}
