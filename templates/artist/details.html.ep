@@ -6,3 +6,7 @@
 % if (my $u = $artist->url) {
     <p>Homepage: <%= link_to $u; %></p>
 % }
+
+<h2>Geplante Konzerte von <%= $artist->name %></h2>
+
+%= include 'event/list', events => [ $artist->future_events->all ], suppress_artist => 1,

@@ -6,7 +6,6 @@ TODO:
     * prettier layout
     * unified input/search field for city/country/zipcode
     * overview pages per
-        + artist
         + location
         + zipcode
     * apply at partner programs
@@ -16,6 +15,9 @@ DONE:
         + give a search a name, thus creating a channel
         + delete channel
         + channel feeds
+
+    * overview pages per
+        + artist
 
     * basic multi-country search
     * proximity search by zipcode

@@ -23,5 +23,18 @@ __PACKAGE__->add_columns(
 );
 
 __PACKAGE__->set_primary_key('id');
+__PACKAGE__->has_many('events', 'Soonish::DB::Result::Event', 'artist');
+
+sub future_events {
+    my $self = shift;
+    $self->search_related(
+        'events',
+        { start_date => { '>=', \'NOW()' } },
+        {
+            order_by => 'start_date',
+            prefetch => 'location',
+        },
+    );
+}
 
 1;
