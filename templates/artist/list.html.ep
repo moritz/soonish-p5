@@ -1,0 +1,26 @@
+% title 'Übersicht über die Künstler';
+% layout 'default';
+
+<h1>Übersicht über Künstler</h1>
+
+<table>
+<thead>
+    <tr>
+        <th>Künstler</th>
+        <th>Webseite</th>
+    </tr>
+</thead>
+<tbody>
+    % for my $a (@$artist) {
+        <tr>
+            <td><a href="/artist/<%= $a->id %>"><%= $a->name %></a></td>
+            <td>
+            % if (my $u = $a->url) {
+                %= link_to $u;
+            % }
+            </td>
+        </tr>
+    % }
+
+</tbody>
+</table

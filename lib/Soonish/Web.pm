@@ -57,6 +57,8 @@ sub startup {
     $r->get('/channel/list')->to('channel#list');
     $r->post('/channel/save')->to('channel#save');
     $r->post('/channel/delete')->to('channel#delete');
+
+    $r->get('/artist')->to('artist#list');
 }
 
 1;
