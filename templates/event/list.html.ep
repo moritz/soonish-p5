@@ -5,10 +5,12 @@
             % unless (stash 'suppress_artist') {
                 <a href="/artist/<%= $e->artist->id %>" title="Details zum Künstler"><%= $e->artist->name %></a>,
             % }
+          <a href="/event/<%= $e->id; %>" title="Details zur Veranstaltung">
             % if (my $name = $e->name) {
                 "<%= $name %>",
             % }
             <%= $e->formatted_date; %>
+          </a>
             % unless (stash 'suppress_location') {
                 in <a href="/location/<%= $e->location->id%>" title="Details zum Veranstaltungsort"><%= $e->location->name; %></a>,
                 <%= $e->location->city %>

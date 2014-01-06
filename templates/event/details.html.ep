@@ -19,5 +19,13 @@
     <dd> <a href="/location/<%= $location->id %>"><%= $location->name; %></a>
         %= include 'location/address', location => $location;
         </dd>
+    % if ($event->url) {
+        <dt>Link zur Veranstaltung</dt>
+        <dd><%= link_to $event->url, $event->url %></dd>
+    % }
+    % if ($event->buy_url) {
+        <dt>Tickets kaufen</dt>
+        <dd><%= link_to $event->buy_url, $event->buy_url %></dd>
+    % }
 </dl>
 
