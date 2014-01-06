@@ -1,0 +1,5 @@
+<address>
+<%= $location->address; %> <br />
+<%= $location->zipcode; %> <%= $location->city; %> <br />
+<%= $location->country->name; %>
+</address>

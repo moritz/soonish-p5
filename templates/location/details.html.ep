@@ -5,12 +5,7 @@
 
 <p>Adresse:</p>
 
-<p class="address">
-<%= $location->address; %> <br />
-<%= $location->zipcode; %> <%= $location->city; %> <br />
-<%= $location->country->name; %>
-</p>
-
+%= include 'location/address', location => $location;
 
 % if (my $u = $location->url) {
     <p>Homepage: <%= link_to $u, $u; %></p>
