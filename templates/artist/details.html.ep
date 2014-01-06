@@ -1,0 +1,8 @@
+% title $artist->name;
+% layout 'default';
+
+<h1><%= $artist->name; %></h1>
+
+% if (my $u = $artist->url) {
+    <p>Homepage: <%= link_to $u; %></p>
+% }

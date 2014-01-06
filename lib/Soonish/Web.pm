@@ -59,6 +59,7 @@ sub startup {
     $r->post('/channel/delete')->to('channel#delete');
 
     $r->get('/artist')->to('artist#list');
+    $r->get('/artist/:id', [id => qr/\d+/])->to('artist#details');
 }
 
 1;

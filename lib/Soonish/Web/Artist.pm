@@ -13,4 +13,15 @@ sub list {
     $self->render();
 }
 
+sub details {
+    my $self   = shift;
+    my $artist = $self->model->artist->find({ id => $self->param('id') });
+    unless ($artist) {
+        $self->render(status => 404, message => 'Künstler nicht gefunden');
+        return;
+    }
+    $self->stash( artist => $artist );
+    $self->render;
+}
+
 1;
