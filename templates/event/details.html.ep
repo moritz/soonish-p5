@@ -20,12 +20,10 @@
         %= include 'location/address', location => $location;
         </dd>
     % if ($event->url) {
-        <dt>Link zur Veranstaltung</dt>
-        <dd><%= link_to $event->url, $event->url %></dd>
+        <dt><%= link_to 'Link zur Veranstaltung', $event->url; %></dt>
     % }
     % if ($event->buy_url) {
-        <dt>Tickets kaufen</dt>
-        <dd><%= link_to $event->buy_url, $event->buy_url %></dd>
+        <dt><%= link_to 'Tickets kaufen', $event->buy_url; %></dt>
     % }
 </dl>
 
