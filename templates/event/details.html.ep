@@ -1,0 +1,23 @@
+% title 'Event-Details';
+% layout 'default';
+
+% my $artist   = $event->artist;
+% my $location = $event->location;
+
+<h1>Event-Details für <%= $artist->name %> am <%= $event->formatted_date %> in <%= $location->name %>, <%= $location->city %></h1>
+
+<dl>
+    <dt>Künstler:</dt>
+    <dd><a href="/artist/<%= $artist->id; %>"><%= $artist->name; %></a>.</dd>
+    % if ($event->name) {
+        <dt>Programm:</dt>
+        <dd><%= $event->name ;%></dd>
+    % }
+    <dt>Datum:</dt>
+    <dd><%= $event->formatted_date; %>.</dd>
+    <dt>Veranstaltungsort:</dt>
+    <dd> <a href="/location/<%= $location->id %>"><%= $location->name; %></a>
+        %= include 'location/address', location => $location;
+        </dd>
+</dl>
+

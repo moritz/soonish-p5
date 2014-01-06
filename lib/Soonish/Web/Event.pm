@@ -55,4 +55,19 @@ sub _country_sel {
     $self->stash(country_sel => \@c);
 }
 
+sub details {
+    my $self = shift;
+
+    my $event = $self->model->event->find(
+        { id => $self->param('id') },
+        { prefetch => ['artist', { location => 'country' } ] },
+    );
+    unless ($event) {
+        $self->render(status => 404, message => 'Event nicht gefunden');
+        return;
+    }
+    $self->stash(event => $event);
+    $self->render();
+}
+
 1;

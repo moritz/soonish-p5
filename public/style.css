@@ -47,3 +47,6 @@ body {
     margin: 2px;
     padding: 2px;
 }
+dd {
+    margin-bottom: 4px;
+}
