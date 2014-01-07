@@ -22,7 +22,7 @@ sub list {
         country     => $country,
         zipcode     => $zipcode,
         distance    => $distance,
-        artists     => \@artists,
+        artist      => \@artists,
     );
     $self->stash(events => \@events);
     if ($is_ajax) {
