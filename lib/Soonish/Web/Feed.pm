@@ -71,8 +71,8 @@ sub atom {
         if (defined(my $n = $e->name)) {
             push @name_chunks, qq["$n"];
         }
-        push @name_chunks, $e->formatted_date;
-        push @name_chunks, 'am', $e->location->zipcode, $e->location->city;
+        push @name_chunks, 'am', $e->formatted_date;
+        push @name_chunks, 'in', $e->location->zipcode, $e->location->city;
 
         my $l = $link->clone();
         $l->path('/');
