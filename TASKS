@@ -6,9 +6,8 @@ TODO:
     * prettier layout
     * unified input/search field for city/country/zipcode
     * overview pages per
-        + zipcode
+        + (?) zipcode
     * apply at partner programs
-    * event detail view
 
 DONE:
     * channels:
@@ -23,3 +22,4 @@ DONE:
     * basic multi-country search
     * proximity search by zipcode
     * imprint link
+    * event detail view
