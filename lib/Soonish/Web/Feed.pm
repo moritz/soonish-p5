@@ -79,7 +79,7 @@ sub atom {
         $l->query(
             artist   => $e->artist->id,
             distance => 1,
-            zipcode      => $e->location->zipcode,
+            zipcode  => $e->location->zipcode,
         );
 
         $feed->add_entry(
