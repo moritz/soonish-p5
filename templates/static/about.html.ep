@@ -1,0 +1,30 @@
+% title "Worum geht's?";
+% layout 'default';
+
+<h1>Worum geht es auf dieser Seite?</h1>
+
+<p>Der Autor, <a href="http://perlgeek.de/">Moritz Lenz</a>, hat sich mehrfach
+geärgert, weil der Konzerte seiner Lieblingsbands in der Nähe seines Wohnorts
+verpasst hat.</p>
+
+<p>Es gibt zwar einige Seiten im Internet, wo man sich über geplante Konzerte
+von Künstlern seiner Wahl informieren lassen kann, z.B. per E-Mail, aber
+typischerweise über Konzerte in ganz Deutschland.</p>
+
+<p>Daher gibt es diese Seite, auf der man sich <a
+href="https://de.wikipedia.org/wiki/Atom_%28Format%29">Atom-Feeds</a>
+erstellen lassen
+kann, die einen über Konzerte im Umkreis einer Postleitzahl informieren. Und
+das alles ohne Anmeldung, und ohne die E-Mail-Adresse herausrücken zu
+müssen.</p>
+
+<p>Der einzige Nachteil ist, dass sich die Adresse des Feeds ändert, wenn man
+z.B. weitere Künstler auf seine Liste setzt. Wer davon genervt ist, kann sich
+mit seiner E-Mail-Adresse anmelden, und eine Suche abspeichern. Zu dieser
+Suche gibt es eine feste Feed-Adresse, auch wenn man die Suche ändert. (Dieses
+Feature ist im Moment noch in Arbeit).</p>
+
+<h2>Fragen?</h2>
+
+<p>Wer Fragen hat, der frage! Am besten per Email an
+<a href="mailto:moritz@cpan.org">moritz@cpan.org</a>.</p>

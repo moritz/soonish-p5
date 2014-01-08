@@ -64,6 +64,8 @@ sub startup {
 
     $r->get('/location')->to('location#list');
     $r->get('/location/:id', [id => qr/\d+/])->to('location#details');
+
+    $r->get('/about')->to('static#about');
 }
 
 1;
