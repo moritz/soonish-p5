@@ -8,7 +8,7 @@ use warnings;
 sub list {
     my $self = shift;
     $self->stash(
-        location => [$self->model->location->search(undef, { order_by => 'name' }, { prefetch => 'country' })->all],
+        location => [$self->model->location->search(undef, { order_by => 'me.name', prefetch => 'country' })->all],
     );
     $self->render();
 }
