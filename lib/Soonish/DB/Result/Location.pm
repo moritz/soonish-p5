@@ -53,4 +53,10 @@ sub future_events {
     );
 }
 
+sub merge_into {
+    my ($self, $other) = @_;
+    $self->events->update({ location => $other->id });
+    $self->delete;
+}
+
 1;
