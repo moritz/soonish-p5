@@ -35,7 +35,7 @@
             <li><a href="<%= $imprint_url %>">Impressum</a></li>
         </ul>
     </div>
-  %= javascript '/mojo/jquery/jquery.js';
+  %= javascript '/js/jquery-2.0.3.min.js';
   %= javascript '/select2/select2.min.js';
   %= javascript '/select2/select2_locale_de.js';
   %= javascript stash('extra_js') if stash 'extra_js';
