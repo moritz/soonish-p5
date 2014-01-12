@@ -50,3 +50,9 @@ body {
 dd {
     margin-bottom: 4px;
 }
+.hidden {
+    display: none;
+}
+.dangerous {
+    color: red;
+}

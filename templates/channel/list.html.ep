@@ -1,6 +1,15 @@
 % title 'Gespeicherte Suchen';
 % layout 'default';
+
+<h1>Gespeicherte Suchen</h1>
 % for my $channel (@$channels) {
     %= include 'channel/details', channel => $channel, feed_url => $feed_url;
 % }
 </ul>
+
+<div id="delete-dialog" class="hidden">
+    <span class="yes-no-dialog">
+        Wirklich löschen? <a href="#" class="dangerous yes">Ja</a> <a href="#"
+        class="no">Nein</a>.
+    </span>
+</div>

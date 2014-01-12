@@ -1,7 +1,7 @@
 TODO:
+    * get a domain name
     * channels:
         + modify existings channels
-        + UI safeguard for channel deletion
     * prettier layout
     * unified input/search field for city/country/zipcode
     * overview pages per
@@ -15,6 +15,7 @@ DONE:
         + give a search a name, thus creating a channel
         + delete channel
         + channel feeds
+        + UI safeguard for channel deletion
 
     * overview pages per
         + artist

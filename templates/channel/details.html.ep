@@ -24,7 +24,7 @@
                 </ul>
             % }
             % else {
-                (alle)
+                <a href="/artist/">(alle)</a>
             % }
         </dd>
         <dt>
