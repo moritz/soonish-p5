@@ -1,0 +1,34 @@
+<div class="channel-<%= $channel->id %>">
+    <h2><%= $channel->name %></h2>
+    <dl>
+        % $feed_url->query(nonce => $channel->nonce);
+        % my $f = $feed_url->to_abs;
+        <dt>Feed</dt>
+        <dd><a href="<%= $f %>"><code><%= $f %></code></a></dd>
+        % if ($channel->zipcode) {
+            <dt>Postleitzahl</dt>
+            <dd><%= $channel->zipcode %>, <%= $channel->country->name %></dd>
+            <dt>Umkreis</dt>
+            <dd><%= $channel->distance %> km</dd>
+        %}
+        <dt>Beobachtete Künstler</dt>
+        <dd>
+            % my @artists = $channel->artists->all;
+            % if (@artists) {
+                <ul>
+                    % for my $artist (@artists) {
+                        <li>
+                            %= link_to $artist->name, artist_details => {id => $artist->id };
+                        </li>
+                    % }
+                </ul>
+            % }
+            % else {
+                (alle)
+            % }
+        </dd>
+        <dt>
+        <dt>Aktionen</dt>
+        <dd><input type="button" data-id="<%= $channel->id %>" class="remove-channel" value="Löschen"/></dd>
+    </dl>
+</div>

@@ -33,10 +33,14 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key('id');
 __PACKAGE__->belongs_to(login => 'Soonish::DB::Result::Login', 'login');
+__PACKAGE__->belongs_to(country => 'Soonish::DB::Result::Country', 'country');
 __PACKAGE__->add_unique_constraint(login_name => ['login', 'name']);
 __PACKAGE__->has_many(artist_channel => 'Soonish::DB::Result::ArtistChannel', 'channel');
-#__PACKAGE__->has_many(artist_login => 'Soonish::DB::Result::ArtistLogin', 'login');
-#__PACKAGE__->many_to_many(artists => artist_login => 'artist');
+__PACKAGE__->many_to_many(artists => artist_channel => 'artist');
+
+sub country_id {
+    shift->get_column('country');
+}
 
 sub artist_ids {
     my $self = shift;

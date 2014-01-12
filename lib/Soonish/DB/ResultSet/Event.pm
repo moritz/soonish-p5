@@ -15,7 +15,9 @@ sub close_to {
     my %search = (
         start_date => { '>='    => \'NOW()', },
     );
-
+    use Data::Dumper;
+    $Data::Dumper::Maxdepth = 2;
+    warn Dumper [$param{country} // 1, $param{zipcode}, $param{distance}];
     if ($param{zipcode}) {
         my $subsel = $self->result_source->schema->resultset('GeoProximity')->search(
             undef,

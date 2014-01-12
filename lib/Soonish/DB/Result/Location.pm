@@ -41,6 +41,10 @@ __PACKAGE__->belongs_to(geo => 'Soonish::DB::Result::Geo', 'zipcode');
 __PACKAGE__->belongs_to(country => 'Soonish::DB::Result::Country', 'country');
 __PACKAGE__->has_many(events => 'Soonish::DB::Result::Event', 'location');
 
+sub country_id {
+    shift->get_column('country');
+}
+
 sub future_events {
     my $self = shift;
     $self->search_related(

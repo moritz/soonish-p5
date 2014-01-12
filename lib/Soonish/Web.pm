@@ -60,7 +60,7 @@ sub startup {
     $r->post('/channel/delete')->to('channel#delete');
 
     $r->get('/artist')->to('artist#list');
-    $r->get('/artist/:id', [id => qr/\d+/])->to('artist#details');
+    $r->get('/artist/:id', [id => qr/\d+/])->to('artist#details')->name('artist_details');
 
     $r->get('/location')->to('location#list');
     $r->get('/location/:id', [id => qr/\d+/])->to('location#details');

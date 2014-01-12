@@ -25,7 +25,7 @@ sub atom {
     if (my $nonce = $self->param('nonce')) {
         my $channel = $self->model->channel->find({ nonce => $nonce });
         %params     = (
-            country     => $channel->country,
+            country     => $channel->country_id,
             zipcode     => $channel->zipcode,
             distance    => $channel->distance,
         );

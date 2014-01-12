@@ -1,13 +1,6 @@
 % title 'Gespeicherte Suchen';
 % layout 'default';
-
-<ul>
-    % for my $channel (@$channels) {
-        <li class="channel-<%= $channel->id %>"><%= $channel->name; %> 
-            % $feed_url->query(nonce => $channel->nonce);
-            % my $f = $feed_url->to_abs;
-            Feed: <a href="<%= $f; %>"><code><%= $f; %></a>
-            <input type="button" data-id="<%= $channel->id %>" class="remove-channel" value="Löschen"/>
-        </li>
-    % }
+% for my $channel (@$channels) {
+    %= include 'channel/details', channel => $channel, feed_url => $feed_url;
+% }
 </ul>
