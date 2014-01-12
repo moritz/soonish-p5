@@ -3,6 +3,7 @@ package Soonish::Web::Feed;
 use Mojo::Base 'Mojolicious::Controller';
 use XML::Atom::SimpleFeed;
 use Data::UUID;
+use Mojo::Parameters;
 
 sub uuid {
     my ($ns, $val) = @_;
@@ -30,8 +31,6 @@ sub atom {
             distance    => $channel->distance,
         );
         $params{artist} = [ $channel->artist_ids ];
-        use Data::Dumper;
-        print Dumper \%params;
     }
     else {
         $params{artist}  = [grep /^\d+\z/, split /\,/, $self->param('a') // ''];
@@ -47,7 +46,7 @@ sub atom {
 
     my $link = $url->clone;
     $link->path('/');
-    $link->query(%params);
+    $link->query(Mojo::Parameters->new);
 
     my $title;
     if ($params{zipcode} && (my $geo = $self->model->geo->find({plz99 => $params{zipcode}}))) {
@@ -75,16 +74,12 @@ sub atom {
         push @name_chunks, 'in', $e->location->zipcode, $e->location->city;
 
         my $l = $link->clone();
-        $l->path('/');
-        $l->query(
-            artist   => $e->artist->id,
-            distance => 1,
-            zipcode  => $e->location->zipcode,
-        );
+        $l->path('/event/' . $e->id);
+        $l->query(Mojo::Parameters->new);
 
         $feed->add_entry(
             title => join(' ', @name_chunks),
-            link  => $e->url // $e->buy_url // 'http://example.org/',
+            link  => $l->to_abs,
             category => $e->artist->name,
             id    => uuid('event', $e->id),
         );
