@@ -1,3 +1,6 @@
+body {
+    font-family: sans-serif;
+}
 .select2 {
     width: 35em;
 }
@@ -25,12 +28,23 @@ fieldset { border: none }
     font-weight: bold
 }
 .header {
-    float: right;
+    width: 100%;
     margin: 0.3ex;
+    background-color: #FFD65C;
+    border-radius: 6px;
+    padding: 0.3ex;
+}
+.header .right {
+    float: right;
+    position: relative;
+}
+.header .left {
+    float: left;
 }
 body {
     max-width: 70em;
 }
+
 
 #footer {
     background-color: #1F57FF;

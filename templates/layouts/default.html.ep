@@ -14,7 +14,11 @@
         <p><strong>Diese Seite braucht Javascript, um richtig zu
             funktionieren!</strong></p>
     </noscript>
-    <p class="header">
+    <div class="header">
+      <div class="left">
+          <a href="/"><%= stash('site_name') // 'Startseite' %></a>
+      </div>
+      <div class="right">
         % if ( defined(stash 'login') ) {
         %     my $email = stash('login')->email;
             <a href="#" class="persona-button" id="personaSignout"><span><%= $email %> abmelden.</span></a>
@@ -22,7 +26,9 @@
         % } else {
             <a href="#" class="persona-button" id="personaSignin"><span>Anmelden mit Ihrer E-Mail-Adresse</span></a>
         % }
-    </p>
+      </div>
+      <div style="clear:both"></div>
+    </div>
 
     <%= content %>
 
