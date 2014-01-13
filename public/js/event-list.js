@@ -145,5 +145,38 @@ $(document).ready(function() {
     }
     auto_show_zipcode();
     $('.show-distance').html($('#distance').val());
+    $('.locfield').select2({
+        placeholder: "Postleitzahl oder Ort eingeben",
+        minimumInputLength: 2,
+        width: '50%',
+        ajax: {
+            url: '/zipcode/search',
+            quietMillis: 100,
+            data: function (term, page) { return { q: term, page: page } },
+            results: function (data, page) {
+                console.log(data);
+                return data;
+            },
+        },
+        formatResult: function (r) {
+            return r.zipcode + ' ' + r.city + ', ' + r.country_name;
+        },
+        formatSelection: function (r) {
+            return r.zipcode + ' ' + r.city + ', ' + r.country_name;
+        },
+        initSelection: function (r) {
+            var id = $(r).val();
+
+            if (id) {
+                return {
+                    id: id,
+                    zipcode: id.split('-')[1],
+                    country_id: id.split('-')[0],
+                    city: '(unknown)',
+                    country_name: '(unknown)'
+                };
+            }
+        }
+    });
     show_feed_url();
 });

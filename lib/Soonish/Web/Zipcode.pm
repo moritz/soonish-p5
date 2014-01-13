@@ -33,6 +33,7 @@ sub search {
     if (length($query)) {
         for ($self->model->resultset('Geo')->autosearch($query, $page)->all) {
             push @res, {
+                id              => join('-', $_->country->id, $_->zipcode),
                 zipcode         => $_->zipcode,
                 city            => $_->city,
                 country_id      => $_->country->id,
