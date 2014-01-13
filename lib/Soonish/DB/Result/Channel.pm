@@ -48,7 +48,7 @@ sub artist_ids {
         $self->search_related('artist_channel')->all;
 }
 
-sub set_artists {
+sub set_artist_ids {
     my ($self, $new) = @_;
     unless (@$new) {
         $self->search_related('artist_channel')->delete;

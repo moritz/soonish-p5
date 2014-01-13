@@ -47,7 +47,7 @@ sub save {
                 %ch,
         });
     }
-    $channel->set_artists([$self->param('artist')]);
+    $channel->set_artist_ids([$self->param('artist')]);
     $self->render(json => {
         name    => $channel->name,
         nonce   => $channel->nonce,
