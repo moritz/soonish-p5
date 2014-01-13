@@ -4,6 +4,7 @@ use Mojo::Base 'Mojolicious::Controller';
 use 5.014;
 use utf8;
 use warnings;
+use Mojo::JSON ();
 
 sub query {
     my $self = shift;
@@ -39,7 +40,8 @@ sub search {
             };
         }
     }
-    $self->render(json => \@res);
+    my $more = @res < 25 ? Mojo::JSON->false : Mojo::JSON->true;
+    $self->render(json => { more => $more, results => \@res });
 }
 
 sub proximity {
