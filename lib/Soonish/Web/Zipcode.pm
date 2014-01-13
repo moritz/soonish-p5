@@ -24,6 +24,24 @@ sub query {
     }
 }
 
+sub search {
+    my $self  = shift;
+    my $query = $self->param('q');
+    my $page  = $self->param('page');
+    my @res;
+    if (length($query)) {
+        for ($self->model->resultset('Geo')->autosearch($query, $page)->all) {
+            push @res, {
+                zipcode         => $_->zipcode,
+                city            => $_->city,
+                country_id      => $_->country->id,
+                country_name    => $_->country->name,
+            };
+        }
+    }
+    $self->render(json => \@res);
+}
+
 sub proximity {
     my $self = shift;
     my $lat  = $self->param('lat');

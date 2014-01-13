@@ -26,8 +26,12 @@ __PACKAGE__->add_columns(
     plzort99 => {
         accessor            => 'city',
     },
+    country => {
+        is_nullable         => 0,
+    },
 );
 
 __PACKAGE__->set_primary_key('plz99');
+__PACKAGE__->belongs_to(country => 'Soonish::DB::Result::Country', 'country');
 
 1;
