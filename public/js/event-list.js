@@ -1,57 +1,57 @@
-var zipcode_cache = {};
-function zipcode_valid_length () {
-    var expected = $('#country').val() == 1 ? 5 : 4;
-    return $('#zipcode').val().length == expected;
-}
+var loc_cache = {};
+function get_zipcode () { $('.locfield').val().split('-')[1]; }
+function get_country () { $('.locfield').val().split('-')[0]; }
+
 function auto_show_zipcode() {
-    var zipcode = $('#zipcode').val();
-    var country = $('#country').val();
-    var cache_key = [country, zipcode].join('/');
-    if (!zipcode) {
+    var loc = $('.locfield').val();
+    if (!loc) {
         $('#loc-head1').show();
         $('#loc-head2').hide();
         return;
     }
-    if (zipcode_cache[cache_key]) {
-        show_zipcode(zipcode, zipcode_cache[cache_key]);
+
+    if (loc_cache[loc]) {
+        show_zipcode(loc_cache[loc]);
         return;
     }
-    $.ajax({
-        url: '/zipcode?zipcode=' + zipcode + ';country=' + $('#country').val(),
-        dataType: 'json',
-        success:  function (res) {
-            zipcode_cache[cache_key] = res.city;
-            $('#zipcode').removeClass('invalid');
-            $('.zipcode-error').html('');
-            show_zipcode(zipcode, res.city);
+    var zipcode = loc.split('-')[1];
+    $.get(
+        '/zipcode/search?q=' + zipcode,
+        function (res) {
+            for (idx in res.results) {
+                var d = res.results[idx];
+                loc_cache[d.id] = d;
+            }
+            if (loc_cache[loc]) {
+                show_zipcode(loc_cache[loc]);
+                return;
+            }
+            console.log('Should not happen!');
         },
-        error: function (res) {
-            $('#zipcode').addClass('invalid');
-            $('.zipcode-error').html(res.responseJSON.error);
-        }
-    });
+        'json'
+    );
 };
-function show_zipcode(zipcode, city) {
-    $('.show-zipcode').html(zipcode);
-    $('.show-city').html(city);
+function show_zipcode(loc) {
+    console.log('show_zipcode');
+    console.log(loc);
+    $('.show-zipcode').html(loc.zipcode);
+    $('.show-city').html(loc.city);
     $('#loc-head2').show();
     $('#loc-head1').hide();
 }
 function show_feed_url() {
-    var loc = document.location;
-    var url = loc.protocol + '//' + loc.host + '/feed/atom?';
+    var doc_loc = document.location;
+    var url = doc_loc.protocol + '//' + doc_loc.host + '/feed/atom?';
     var artists = $('#artist').val();
-    if (!artists) {
-        artists = []
-    }
-    artists = artists.sort(function (a, b) { return a - b }).join(',');
-    if (artists.length > 0) {
+    if (artists && artists.length) {
+        artists = artists.sort(function (a, b) { return a - b }).join(',');
         url = url + 'a=' + artists + ';'
     }
-    url = url + 'c=' + $('#country').val() + ';';
-    var zipcode = $('#zipcode').val();
-    if (zipcode_valid_length()) {
-        url = url + 'z=' + zipcode + ';'
+    var loc = $('.locfield').val();
+    if (loc) {
+        loc = loc.split('-');
+        url = url + 'c=' + loc[0] + ';';
+        url = url + 'z=' + loc[1] + ';';
     }
     var distance = $('#distance').val();
     if (distance.length > 0) {
@@ -69,29 +69,19 @@ function show_feed_url() {
     }
 }
 function update_list() {
-    var $zipcode = $('#zipcode');
-    var zipcode  = $zipcode.val();
-    var valid = true;
-    if (zipcode.length == 0 || zipcode_valid_length()) {
-        $zipcode.removeClass('invalid');
-        auto_show_zipcode();
-    }
-    else {
-        valid = false;
-        $zipcode.addClass('invalid');
-    }
+    var $loc = $('.locfield');
+    var loc  = $loc.val();
+    auto_show_zipcode();
 
     var $distance = $('#distance');
     var distance  = $distance.val();
     if (!distance.match(/^\d+(?:\.\d*)?$/)) {
-        valid = false;
         $distance.addClass('invalid');
+        return;
     }
     else {
         $distance.removeClass('invalid');
     }
-    if (!valid)
-        return;
 
     var url = '/?ajax=1;' + $('#param-select-form').serialize();
     $.get(url, function(res) {
@@ -119,19 +109,19 @@ function save_channel() {
 $(document).ready(function() {
     $('.select2').select2();
     $('#save-channel').click(save_channel);
-    $('#zipcode').change(update_list);
     $('#distance').change(update_list);
     $('#artist').change(update_list);
-    $('#country').change(update_list);
+    $('.locfield').change(update_list);
     $('#sbmt').click(update_list);
-    if (!$('#zipcode').val() && navigator && navigator.geolocation) {
+    if (!$('.locfield').val() && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function (loc) {
                 var c = loc.coords;
                 $.get('/proximity?lat=' + c.latitude + ';lon=' + c.longitude,
                     function (res) {
                         if (res.zipcode) {
-                            $('#zipcode').val(res.zipcode);
+/*                            $('#zipcode').val(res.zipcode);
+ */
                             update_list();
                         }
                     },
@@ -154,7 +144,10 @@ $(document).ready(function() {
             quietMillis: 100,
             data: function (term, page) { return { q: term, page: page } },
             results: function (data, page) {
-                console.log(data);
+                for (idx in data.results) {
+                    var d = data.results[idx];
+                    loc_cache[d.id] = d;
+                }
                 return data;
             },
         },
