@@ -1,29 +1,26 @@
 var loc_cache = {};
-function get_zipcode () { $('.locfield').val().split('-')[1]; }
-function get_country () { $('.locfield').val().split('-')[0]; }
 
 function auto_show_zipcode() {
-    var loc = $('.locfield').val();
+    var loc = $('.locfield').select2('data');
     if (!loc) {
         $('#loc-head1').show();
         $('#loc-head2').hide();
         return;
     }
 
-    if (loc_cache[loc]) {
-        show_zipcode(loc_cache[loc]);
+    if (loc_cache[loc.id]) {
+        show_zipcode(loc_cache[loc.id]);
         return;
     }
-    var zipcode = loc.split('-')[1];
     $.get(
-        '/zipcode/search?q=' + zipcode,
+        '/zipcode/search?q=' + loc.zipcode,
         function (res) {
             for (idx in res.results) {
                 var d = res.results[idx];
                 loc_cache[d.id] = d;
             }
-            if (loc_cache[loc]) {
-                show_zipcode(loc_cache[loc]);
+            if (loc_cache[loc.id]) {
+                show_zipcode(loc_cache[loc.id]);
                 return;
             }
             console.log('Should not happen!');
@@ -45,11 +42,10 @@ function show_feed_url() {
         artists = artists.sort(function (a, b) { return a - b }).join(',');
         url = url + 'a=' + artists + ';'
     }
-    var loc = $('.locfield').val();
+    var loc = $('.locfield').select2('data');
     if (loc) {
-        loc = loc.split('-');
-        url = url + 'c=' + loc[0] + ';';
-        url = url + 'z=' + loc[1] + ';';
+        url = url + 'c=' + loc.country + ';';
+        url = url + 'z=' + loc.zipcode + ';';
     }
     var distance = $('#distance').val();
     if (distance.length > 0) {
@@ -67,8 +63,6 @@ function show_feed_url() {
     }
 }
 function update_list() {
-    var $loc = $('.locfield');
-    var loc  = $loc.val();
     auto_show_zipcode();
 
     var $distance = $('#distance');
@@ -124,28 +118,6 @@ $(document).ready(function() {
     $('#artist').change(update_list);
     $('.locfield').click(update_list);
     $('#sbmt').click(update_list);
-    if (!$('.locfield').val() && navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function (loc) {
-                var c = loc.coords;
-                $.get('/proximity?lat=' + c.latitude + ';lon=' + c.longitude,
-                    function (res) {
-                        if (res.id) {
-                            loc_cache[res.id] = res;
-                            $('.locfield').select2('data', res);
-                            update_list();
-                        }
-                    },
-                    'json'
-                );
-            },
-            function (e) {
-                console.log('Geolocation lookup failed');
-            }
-        );
-    }
-    auto_show_zipcode();
-    $('.show-distance').html($('#distance').val());
     $('.locfield').select2({
         placeholder: "Postleitzahl oder Ort eingeben",
         minimumInputLength: 2,
@@ -185,5 +157,27 @@ $(document).ready(function() {
             });
         }
     });
+    if (!$('.locfield').select2('data') && navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (loc) {
+                var c = loc.coords;
+                $.get('/proximity?lat=' + c.latitude + ';lon=' + c.longitude,
+                    function (res) {
+                        if (res.id) {
+                            loc_cache[res.id] = res;
+                            $('.locfield').select2('data', res);
+                            update_list();
+                        }
+                    },
+                    'json'
+                );
+            },
+            function (e) {
+                console.log('Geolocation lookup failed');
+            }
+        );
+    }
+    auto_show_zipcode();
+    $('.show-distance').html($('#distance').val());
     show_feed_url();
 });
