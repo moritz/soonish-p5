@@ -65,12 +65,11 @@ EOF
             $sth->finish;
             if ($country_id) {
                 $self->render(json => {
-                    country => {
-                        id      => $country_id,
-                        name    => $country_name,
-                    },
-                    zipcode     => $zipcode,
-                    city        => $city,
+                    id           => join('-', $country_id, $zipcode),
+                    country_id   => $country_id,
+                    country_name => $country_name,
+                    zipcode      => $zipcode,
+                    city         => $city,
                 });
             }
             else {

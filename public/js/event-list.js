@@ -32,8 +32,6 @@ function auto_show_zipcode() {
     );
 };
 function show_zipcode(loc) {
-    console.log('show_zipcode');
-    console.log(loc);
     $('.show-zipcode').html(loc.zipcode);
     $('.show-city').html(loc.city);
     $('#loc-head2').show();
@@ -106,12 +104,25 @@ function save_channel() {
     );
 }
 
+function format(r) {
+    return r.zipcode + ' ' + r.city + ', ' + r.country_name;
+};
+
+function results(data) {
+    for (idx in data.results) {
+        var d = data.results[idx];
+        loc_cache[d.id] = d;
+    }
+    return data;
+}
+
+
 $(document).ready(function() {
     $('.select2').select2();
     $('#save-channel').click(save_channel);
     $('#distance').change(update_list);
     $('#artist').change(update_list);
-    $('.locfield').change(update_list);
+    $('.locfield').click(update_list);
     $('#sbmt').click(update_list);
     if (!$('.locfield').val() && navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -119,9 +130,9 @@ $(document).ready(function() {
                 var c = loc.coords;
                 $.get('/proximity?lat=' + c.latitude + ';lon=' + c.longitude,
                     function (res) {
-                        if (res.zipcode) {
-/*                            $('#zipcode').val(res.zipcode);
- */
+                        if (res.id) {
+                            loc_cache[res.id] = res;
+                            $('.locfield').select2('data', res);
                             update_list();
                         }
                     },
@@ -143,32 +154,35 @@ $(document).ready(function() {
             url: '/zipcode/search',
             quietMillis: 100,
             data: function (term, page) { return { q: term, page: page } },
-            results: function (data, page) {
-                for (idx in data.results) {
-                    var d = data.results[idx];
-                    loc_cache[d.id] = d;
-                }
-                return data;
-            },
+            results: results,
         },
-        formatResult: function (r) {
-            return r.zipcode + ' ' + r.city + ', ' + r.country_name;
-        },
-        formatSelection: function (r) {
-            return r.zipcode + ' ' + r.city + ', ' + r.country_name;
-        },
-        initSelection: function (r) {
-            var id = $(r).val();
+        formatResult: format,
+        formatSelection: format,
+        initSelection: function (r, callback) {
+            var id      = $(r).val();
+            var country = id.split('-')[0];
+            var zipcode = id.split('-')[1];
 
-            if (id) {
-                return {
-                    id: id,
-                    zipcode: id.split('-')[1],
-                    country_id: id.split('-')[0],
-                    city: '(unknown)',
-                    country_name: '(unknown)'
-                };
+            if (!id)
+                return;
+
+            if (loc_cache[id]) {
+                callback(loc_cache[id]);
+                return;
             }
+            $.ajax( '/zipcode/search?q=' + zipcode, {
+                success: function (res) {
+                    for (idx in res.results) {
+                        var d = res.results[idx];
+                        loc_cache[d.id] = d;
+                        if (d.country_id == country) {
+                            callback(d);
+                        }
+                    }
+                },
+                type: 'get',
+                dataType: 'json'
+            });
         }
     });
     show_feed_url();

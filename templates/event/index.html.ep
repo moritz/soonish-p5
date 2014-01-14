@@ -19,7 +19,7 @@
     <tr>
         <td><label for="location">Ort:</label></td>
         <td>
-            <input name="location" class="locfield" />
+            <input name="location" class="locfield" type="hidden" />
         </td>
     </tr>
     <tr>
