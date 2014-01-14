@@ -70,3 +70,6 @@ dd {
 .dangerous {
     color: red;
 }
+input {
+    border-radius: 4px;
+}
