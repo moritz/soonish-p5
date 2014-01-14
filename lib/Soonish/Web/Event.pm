@@ -13,6 +13,9 @@ sub list {
     my $zipcode  = $self->param('zipcode');
     my $distance = $self->param('distance') // 50;
     my $country  = $self->param('country') // 1;
+    if (my $loc = $self->param('location')) {
+        ($country, $zipcode) = split /-/, $loc;
+    }
     $self->stash(country  => $country);
     $self->stash(distance => $distance);
     $self->stash(ajax => 1) if $is_ajax;

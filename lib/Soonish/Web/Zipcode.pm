@@ -33,6 +33,7 @@ sub search {
     if (length($query)) {
         for ($self->model->resultset('Geo')->autosearch($query, $page)->all) {
             push @res, {
+                id              => join('-', $_->country->id, $_->zipcode),
                 zipcode         => $_->zipcode,
                 city            => $_->city,
                 country_id      => $_->country->id,
@@ -64,12 +65,11 @@ EOF
             $sth->finish;
             if ($country_id) {
                 $self->render(json => {
-                    country => {
-                        id      => $country_id,
-                        name    => $country_name,
-                    },
-                    zipcode     => $zipcode,
-                    city        => $city,
+                    id           => join('-', $country_id, $zipcode),
+                    country_id   => $country_id,
+                    country_name => $country_name,
+                    zipcode      => $zipcode,
+                    city         => $city,
                 });
             }
             else {
