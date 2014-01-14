@@ -44,7 +44,7 @@ function show_feed_url() {
     }
     var loc = $('.locfield').select2('data');
     if (loc) {
-        url = url + 'c=' + loc.country + ';';
+        url = url + 'c=' + loc.country_id + ';';
         url = url + 'z=' + loc.zipcode + ';';
     }
     var distance = $('#distance').val();
