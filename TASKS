@@ -3,7 +3,6 @@ TODO:
     * channels:
         + modify existings channels
     * prettier layout
-    * unified input/search field for city/country/zipcode
     * overview pages per
         + (?) zipcode
     * apply at partner programs
@@ -26,3 +25,4 @@ DONE:
     * proximity search by zipcode
     * imprint link
     * event detail view
+    * unified input/search field for city/country/zipcode
