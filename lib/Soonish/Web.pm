@@ -12,19 +12,26 @@ use Soonish qw/model/;
 sub startup {
     my $self = shift;
 
-    $self->plugin(
-        moz_persona => {
-            audience => Soonish::config('site_url'),
-            siteName => 'Umkreissuche nach Events',
-            autoHook => {
-                css     => 1,
-                persona => 1,
-                local   => 1,
-                uid     => 1,
-                jquery  => 0,
-            },
-        }
-    );
+    my $debug_email;
+    if ($self->mode eq 'development' && $ENV{SOONISH_DEV}) {
+        warn "In debug mode, automatically logging in admin";
+        $debug_email = Soonish::config('admin_email');
+    }
+    else {
+        $self->plugin(
+            moz_persona => {
+                audience => Soonish::config('site_url'),
+                siteName => 'Umkreissuche nach Events',
+                autoHook => {
+                    css     => 1,
+                    persona => 1,
+                    local   => 1,
+                    uid     => 1,
+                    jquery  => 0,
+                },
+            }
+        );
+    }
 
     $self->helper(model => sub {
         state $model = model();
@@ -38,9 +45,9 @@ sub startup {
         my $c = shift;
         $c->stash(imprint_url => Soonish::config('imprint_url'));
         $c->stash(is_dev => $is_dev);
-        if ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay') {
+        if ($debug_email || ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay')) {
             my $login_rs = $c->model->login;
-            my $email    = $c->session('_persona')->{email};
+            my $email    = $debug_email || $c->session('_persona')->{email};
             my $login    = $login_rs->find_or_create(
                 { email => $email },
             );

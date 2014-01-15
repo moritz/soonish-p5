@@ -7,5 +7,6 @@
     },
     "imprint_url": "http://example.com/imprint",
     "site_url": "http://my-site.example.com/",
+    "admin_email": "nobody@example.com",
     "secret": "123456789"
 }
