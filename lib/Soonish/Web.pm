@@ -21,7 +21,7 @@ sub startup {
         $self->plugin(
             moz_persona => {
                 audience => Soonish::config('site_url'),
-                siteName => 'Umkreissuche nach Events',
+                siteName => Soonish::config('site_name'),
                 autoHook => {
                     css     => 1,
                     persona => 1,
@@ -37,14 +37,19 @@ sub startup {
         state $model = model();
     });
 
-    $self->secrets([Soonish::config('secret')]);
     my $is_dev = $self->mode eq 'development';
+    my %static = (
+        site_name   => Soonish::config('site_name'),
+        imprint_url => Soonish::config('imprint_url'),
+        is_dev      => $is_dev,
+    );
+
+    $self->secrets([Soonish::config('secret')]);
 
     # Router
     my $r = $self->routes->under(sub {
         my $c = shift;
-        $c->stash(imprint_url => Soonish::config('imprint_url'));
-        $c->stash(is_dev => $is_dev);
+        $c->stash(%static);
         if ($debug_email || ($c->session('_persona') && $c->session('_persona')->{status} eq 'okay')) {
             my $login_rs = $c->model->login;
             my $email    = $debug_email || $c->session('_persona')->{email};
