@@ -177,7 +177,7 @@ $(document).ready(function() {
             }
         );
     }
-    auto_show_zipcode();
     $('.show-distance').html($('#distance').val());
     show_feed_url();
+    window.setTimeout(auto_show_zipcode, 200);
 });
