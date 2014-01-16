@@ -25,11 +25,20 @@ sub list {
             $distance = $channel->distance   if $channel->distance;
             my @a     = $channel->artist_ids;
             @artists  = @a if @a;
+            $self->param('channel-name', $channel->name);
+            $self->stash(channel_id => $channel->id);
         }
     }
     $self->stash(country  => $country);
     $self->stash(distance => $distance);
     $self->stash(zipcode => $zipcode);
+    if ($country && $zipcode) {
+        $self->param(location => join('-', $country, $zipcode));
+        warn "Setting locaton to ", join('-', $country, $zipcode);
+    }
+    $self->param(distance => $distance);
+    $self->param(artist   => \@artists) if @artists;
+    $self->stash(artist   => \@artists) if @artists;
     my @events = $self->model->event->close_to(
         country     => $country,
         zipcode     => $zipcode,

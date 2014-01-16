@@ -9,6 +9,7 @@
 </div>
 
 <form id="param-select-form">
+% hidden_field => channel_id => stash('channel_id'), id => 'channel_id';
 <table class="param-select">
     <tr>
         <td><label for="artists">Künstler:</label></td>
@@ -19,13 +20,15 @@
     <tr>
         <td><label for="location">Ort:</label></td>
         <td>
-            <input name="location" class="locfield" type="hidden" />
+            %= input_tag location => class => 'locfield', type => 'hidden';
         </td>
     </tr>
     <tr>
         <td> Im Umkreis von</td>
-        <td> <input id="distance" name="distance" type="text" value="<%=
-        $distance // 50 %>" size=5 /> km</td>
+        <td>
+            %= input_tag distance => id => 'distance', size => 5 ;
+            km
+        </td>
     </tr>
     <tr>
         <td />
