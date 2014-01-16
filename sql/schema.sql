@@ -49,6 +49,7 @@ CREATE TABLE event (
 CREATE TABLE login (
     id          SERIAL       PRIMARY KEY UNIQUE NOT NULL,
     email       VARCHAR(255) NOT NULL UNIQUE,
+    is_admin    BOOLEAN      NOT NULL DEFAULT False,
     created     TIMESTAMP    NOT NULL DEFAULT NOW()
 );
 

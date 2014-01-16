@@ -17,6 +17,9 @@ __PACKAGE__->add_columns(
     email   => {
         is_nullable         => 0,
     },
+    is_admin => {
+        is_nullable         => 0,
+    },
     created => {
         is_nullable         => 0,
         retrieve_on_insert  => 1,

@@ -6,7 +6,6 @@ TODO:
     * overview pages per
         + (?) zipcode
     * apply at partner programs
-    * admin UI for merging locations
 
 DONE:
     * channels:
@@ -26,3 +25,4 @@ DONE:
     * imprint link
     * event detail view
     * unified input/search field for city/country/zipcode
+    * admin UI for merging locations

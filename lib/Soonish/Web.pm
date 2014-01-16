@@ -52,6 +52,7 @@ sub startup {
                 { email => $email },
             );
             $c->stash(login => $login);
+            $c->stash(is_admin => $login->is_admin);
         }
         return 1;
     });
@@ -70,10 +71,19 @@ sub startup {
     $r->get('/artist')->to('artist#list');
     $r->get('/artist/:id', [id => qr/\d+/])->to('artist#details')->name('artist_details');
 
-    $r->get('/location')->to('location#list');
+    $r->get('/location')->to('location#list')->name('location_list');
     $r->get('/location/:id', [id => qr/\d+/])->to('location#details');
 
     $r->get('/about')->to('static#about');
+
+    my $admin = $r->under('', sub {
+        my $c         = shift;
+        my $login     = $c->stash('login');
+        my $is_admin  = $login->is_admin;
+        return 1 if $is_admin;
+        return undef;
+    });
+    $admin->post('/location/merge')->to('location#merge')->name('location_merge');
 }
 
 1;

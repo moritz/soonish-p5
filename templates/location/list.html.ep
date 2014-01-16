@@ -1,28 +1,48 @@
 % title 'Übersicht über die Künstler';
 % layout 'default';
 
+% my $is_admin = stash('is_admin');
+
 <h1>Liste der Veranstaltungsorte</h1>
 
 <table>
 <thead>
     <tr>
+        % if ($is_admin) {
+            <th>ID</th>
+        % }
         <th>Name</th>
         <th>Adresse</th>
         <th>Webseite</th>
+        % if ($is_admin) {
+            <th>Zusammenfassen zu</th>
+        % }
     </tr>
 </thead>
 <tbody>
     % for my $l (@$location) {
         <tr>
+            % if ($is_admin) {
+                <td><%= $l->id %></td>
+            % }
             <td><a href="/location/<%= $l->id %>"><%= $l->name %></a></td>
             <td>
                 %= join ', ', grep defined, $l->address, join(' ', $l->zipcode, $l->city), $l->country->name;
-            <td>
+            </td>
             <td>
             % if (my $u = $l->url) {
-                %= link_to $u, $u;
+                %= link_to 'Link', $u;
             % }
             </td>
+            % if ($is_admin) {
+                <td>
+                    %= form_for location_merge => (method => 'POST') => begin
+                        %= hidden_field source => $l->id;
+                        %= input_tag 'dest', size => 5;
+                        %= submit_button 'Go';
+                    % end
+                </td>
+            % }
         </tr>
     % }
 

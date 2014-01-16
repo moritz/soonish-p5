@@ -27,4 +27,14 @@ sub details {
     $self->render;
 }
 
+sub merge {
+    my $self   = shift;
+    my $source = $self->model->location->find({ id => $self->param('source') });
+    my $dest   = $self->model->location->find({ id => $self->param('dest') });
+    if ($source && $dest) {
+        $source->merge_into($dest);
+    }
+    $self->redirect_to('location_list');
+}
+
 1;
