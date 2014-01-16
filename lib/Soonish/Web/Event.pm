@@ -16,11 +16,20 @@ sub list {
     if (my $loc = $self->param('location')) {
         ($country, $zipcode) = split /-/, $loc;
     }
+    my @artists = $self->param('artist');
+    if (my $nonce = $self->param('nonce')) {
+        my $channel = $self->model->channel->find({nonce => $nonce});
+        if ($channel) {
+            $country  = $channel->country_id if $channel->country_id;
+            $zipcode  = $channel->zipcode    if $channel->zipcode;
+            $distance = $channel->distance   if $channel->distance;
+            my @a     = $channel->artist_ids;
+            @artists  = @a if @a;
+        }
+    }
     $self->stash(country  => $country);
     $self->stash(distance => $distance);
-    $self->stash(ajax => 1) if $is_ajax;
     $self->stash(zipcode => $zipcode);
-    my @artists = $self->param('artist');
     my @events = $self->model->event->close_to(
         country     => $country,
         zipcode     => $zipcode,

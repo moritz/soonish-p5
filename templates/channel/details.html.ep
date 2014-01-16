@@ -1,5 +1,5 @@
 <div class="channel-<%= $channel->id %>">
-    <h2><%= $channel->name %></h2>
+    <h2><a href="/?nonce=<%= $channel->nonce %>"><%= $channel->name %></a></h2>
     <dl>
         % $feed_url->query(nonce => $channel->nonce);
         % my $f = $feed_url->to_abs;
