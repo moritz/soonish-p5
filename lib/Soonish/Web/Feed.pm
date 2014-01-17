@@ -23,6 +23,7 @@ sub atom {
     my $self        = shift;
     my $url         = $self->req->url;
     my %params;
+    my $name;
     if (my $nonce = $self->param('nonce')) {
         my $channel = $self->model->channel->find({ nonce => $nonce });
         %params     = (
@@ -31,6 +32,7 @@ sub atom {
             distance    => $channel->distance,
         );
         $params{artist} = [ $channel->artist_ids ];
+        $name = $channel->name;
     }
     else {
         $params{artist}  = [grep /^\d+\z/, split /\,/, $self->param('a') // ''];
@@ -52,9 +54,10 @@ sub atom {
     if ($params{zipcode} && (my $geo = $self->model->geo->find({plz99 => $params{zipcode}}))) {
         $title = sprintf 'Veranstaltungen bei %05d %s (%d km)',
             $params{zipcode}, $geo->city, $params{distance};
+        $title = "$name - $title" if $name;
     }
     else {
-        $title = 'Veranstaltungen';
+        $title = $name // 'Veranstaltungen';
     }
 
     my $feed = XML::Atom::SimpleFeed->new(
