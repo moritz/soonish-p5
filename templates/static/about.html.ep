@@ -1,7 +1,7 @@
 % title "Worum geht's?";
 % layout 'default';
 
-<h1>Worum geht es auf dieser Seite?</h1>
+<h1>Worum geht es auf <%= $site_name %>?</h1>
 
 <p>Der Autor, <a href="http://perlgeek.de/">Moritz Lenz</a>, hat sich mehrfach
 geärgert, weil der Konzerte seiner Lieblingsbands in der Nähe seines Wohnorts
@@ -24,7 +24,30 @@ mit seiner E-Mail-Adresse anmelden, und eine Suche abspeichern. Zu dieser
 Suche gibt es eine feste Feed-Adresse, auch wenn man die Suche ändert. (Dieses
 Feature ist im Moment noch in Arbeit).</p>
 
-<h2>Fragen?</h2>
+<h2 id="contribute">Wie kann ich helfen?</h2>
+
+<p><%= $site_name %> wird von Freiwilligen entwickelt und betrieben. Wer
+mithelfen möchte, hat mehrere Möglichkeiten:</p>
+
+<ul>
+    <li>Wer eine Band hat oder alleine auftritt, kann <a
+    href="#kontakt">mir</a> gerne die Konzertdaten zukommen lassen, am
+    besten in einer CSV- oder Excelliste mit
+    folgenden Daten: Name des Künstlers/der Band, Webseite (falls Vorhanden),
+    Datum, Titel der Veranstaltung (falls bekannt), Name des Veranstaltungsort, Adresse, Postleitzahl, Land
+    (Deutschland/Österreich/Schweiz), Link zur Veranstaltung (falls bekannt),
+    Link zu einer Webseite, wo man Tickets kaufen kann (falls bekannt).</li>
+    <li>Wer programmieren kann und will, kann den Source-Code <a
+    href="https://github.com/moritz/soonish-p5">auf github</a> finden und dort
+    Pull-Requests schicken. Bei größeren Änderungen bitte vorher ansprechen.</li>
+    <li>Verbesserungen des Layouts sind immer willkommen</li>
+    <li>Wer Fehler findet oder sich neue Features wünscht, kann sie <a
+    href="github.com/moritz/soonish-p5/issues">hier</a> eingeben (konstenloser
+    Account nötig).</li>
+
+</ul>
+
+<h2 id="kontakt">Fragen?</h2>
 
 <p>Wer Fragen hat, der frage! Am besten per Email an
 <a href="mailto:moritz@cpan.org">moritz@cpan.org</a>.</p>
