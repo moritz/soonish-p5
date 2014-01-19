@@ -25,7 +25,7 @@ sub list {
             $distance = $channel->distance   if $channel->distance;
             my @a     = $channel->artist_ids;
             @artists  = @a if @a;
-            $self->param('channel-name', $channel->name);
+            $self->param('channel_name', $channel->name);
             $self->stash(channel_id => $channel->id);
         }
     }
@@ -34,7 +34,6 @@ sub list {
     $self->stash(zipcode => $zipcode);
     if ($country && $zipcode) {
         $self->param(location => join('-', $country, $zipcode));
-        warn "Setting locaton to ", join('-', $country, $zipcode);
     }
     $self->param(distance => $distance);
     $self->param(artist   => \@artists) if @artists;

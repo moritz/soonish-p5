@@ -84,6 +84,7 @@ function update_list() {
 }
 
 function save_channel() {
+    console.log('Saving Channel');
     var url = '/channel/save?' + $('#param-select-form').serialize();
     $.ajax(
 

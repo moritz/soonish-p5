@@ -69,7 +69,7 @@ sub set_artist_ids {
     if (keys %exists) {
         $self->search_related('artist_channel', {
             artist  => { IN => [keys %exists] },
-        });
+        })->delete_all;
     }
     for (@to_add) {
         $self->create_related('artist_channel', {

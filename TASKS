@@ -1,7 +1,7 @@
 TODO:
     * apply at partner programs
     * channels:
-        + modify existings channels
+        + rename channel
     * prettier layout
     * overview pages per
         + (?) zipcode
@@ -14,6 +14,7 @@ DONE:
         + delete channel
         + channel feeds
         + UI safeguard for channel deletion
+        + modify existings channels
 
     * overview pages per
         + artist

@@ -9,7 +9,7 @@
 </div>
 
 <form id="param-select-form">
-% hidden_field => channel_id => stash('channel_id'), id => 'channel_id';
+%= hidden_field channel_id => stash('channel_id'), id => 'channel_id';
 <table class="param-select">
     <tr>
         <td><label for="artists">Künstler:</label></td>
@@ -38,8 +38,10 @@
     </tr>
     % if (stash('login')) {
         <tr>
-            <td><label for="channel-name">Suche mit Namen</label></td>
-            <td><input name="channel-name" id="channel-name" size="10" /> <input type="button" value="abspeichern" id="save-channel" /> <span class="channel-save-notify"></span></td>
+            <td><label for="channel_name">Suche mit Namen</label></td>
+            <td>
+                %= input_tag 'channel_name', id => 'channel-name', size => 10, stash('channel_id') ? (disabled => 1) : ();
+                <input type="button" value="abspeichern" id="save-channel" /> <span class="channel-save-notify"></span></td>
         </tr>
     % }
 </table>
