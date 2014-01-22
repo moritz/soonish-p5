@@ -57,10 +57,10 @@ sub set_artist_ids {
     my %exists;
     my @to_add;
     my @artists = $self->artist_ids;
-    $exists{@artists} = (1) x @artists;
+    @exists{@artists} = (1) x @artists;
     for (@$new) {
         if (delete $exists{$_}) {
-            # nothing to be done
+            # nothing to do
         }
         else {
             push @to_add, $_;
