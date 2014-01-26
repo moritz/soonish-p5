@@ -89,6 +89,7 @@ sub startup {
         return undef;
     });
     $admin->post('/location/merge')->to('location#merge')->name('location_merge');
+    $admin->get('/login/count')->to('login#count');
 }
 
 1;
