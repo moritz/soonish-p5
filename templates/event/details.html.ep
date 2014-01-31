@@ -4,26 +4,28 @@
 % my $artist   = $event->artist;
 % my $location = $event->location;
 
+<div itemscope itemtype="http://schema.org/Event">
 <h1>Event-Details für <%= $artist->name %> am <%= $event->formatted_date %> in <%= $location->name %>, <%= $location->city %></h1>
 
 <dl>
     <dt>Künstler:</dt>
-    <dd><a href="/artist/<%= $artist->id; %>"><%= $artist->name; %></a>.</dd>
+    <dd itemprop="performer"><a href="/artist/<%= $artist->id; %>"><%= $artist->name; %></a>.</dd>
     % if ($event->name) {
         <dt>Programm:</dt>
-        <dd><%= $event->name ;%></dd>
+        <dd itemprop="name"><%= $event->name ;%></dd>
     % }
     <dt>Datum:</dt>
-    <dd><%= $event->formatted_date; %>.</dd>
+    <dd><time itemprop="startDate"><%= $event->formatted_date; %>.</time></dd>
     <dt>Veranstaltungsort:</dt>
-    <dd> <a href="/location/<%= $location->id %>"><%= $location->name; %></a>
+    <dd itemprop="location"> <a href="/location/<%= $location->id %>"><%= $location->name; %></a>
         %= include 'location/address', location => $location;
         </dd>
     % if ($event->url) {
-        <dt><%= link_to 'Link zur Veranstaltung', $event->url; %></dt>
+        <dt itemprop="url"><%= link_to 'Link zur Veranstaltung', $event->url; %></dt>
     % }
     % if ($event->buy_url) {
-        <dt><%= link_to 'Tickets kaufen', $event->buy_url; %></dt>
+        <dt itemprop="offers"><%= link_to 'Tickets kaufen', $event->buy_url; %></dt>
     % }
 </dl>
 
+</div>
