@@ -1,15 +1,15 @@
 % if (@$events) {
     <ul>
     % for my $e (@$events) {
-        <li>
+        <li itemscope itemtype="http://schema.org/Event">
             % unless (stash 'suppress_artist') {
-                <a href="/artist/<%= $e->artist->id %>" title="Details zum Künstler"><%= $e->artist->name %></a>,
+                <a href="/artist/<%= $e->artist->id %>" title="Details zum Künstler" itemprop="performer"><%= $e->artist->name %></a>,
             % }
-          <a href="/event/<%= $e->id; %>" title="Details zur Veranstaltung">
+          <a href="/event/<%= $e->id; %>" title="Details zur Veranstaltung" itemprop="url">
             % if (my $name = $e->name) {
                 "<%= $name %>",
             % }
-            <%= $e->formatted_date; %>
+            <time itemprop="startDate"><%= $e->formatted_date; %></time>
           </a>
             % unless (stash 'suppress_location') {
                 in <a href="/location/<%= $e->location->id%>" title="Details zum Veranstaltungsort"><%= $e->location->name; %></a>,
