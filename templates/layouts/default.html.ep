@@ -3,6 +3,9 @@
     <head><title><%= $site_name %> - <%= title %></title>
         %= stylesheet '/select2/select2.css';
         %= stylesheet '/style.css';
+        <link rel="prefetch" href="/js/jquery-2.0.3.min.js">
+        <link rel="prefetch" href="/js/select2.min.js">
+        <link rel="prefetch" href="/js/select2_locale_de.js">
         % if ($is_dev) {
             <style type="text/css">
                 body { background-color: #CCFCFF }
