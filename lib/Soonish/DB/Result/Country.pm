@@ -18,6 +18,9 @@ __PACKAGE__->add_columns(
     name    => {
         is_nullable         => 0,
     },
+    name_english => {
+        is_nullable         => 0,
+    },
 );
 __PACKAGE__->set_primary_key('id');
 __PACKAGE__->add_unique_constraint(name => ['name']);

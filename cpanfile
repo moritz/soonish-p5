@@ -6,3 +6,5 @@ requires 'YAML::XS';
 requires 'XML::Atom::SimpleFeed';
 requires 'Data::UUID';
 requires 'Mojolicious::Plugin::MozPersona';
+requires 'Net::LastFM';
+requires 'Date::Parse';
