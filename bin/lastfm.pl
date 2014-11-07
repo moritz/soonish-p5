@@ -27,12 +27,18 @@ for my $artist (@ARGV) {
     $artist = decode_utf8 $artist;
     say "Artist: $artist";
 
-    my $result = $lastfm->request(
-        method      => 'artist.GetEvents',
-        artist      => $artist,
-        autocorrect => 1,
-        limit       => 200,
-    );
+    my $result = eval {
+        $lastfm->request(
+            method      => 'artist.GetEvents',
+            artist      => $artist,
+            autocorrect => 1,
+            limit       => 200,
+        );
+    };
+    unless ($result) {
+        warn "Error from the LastFM API: $@";
+        next;
+    }
 
     if ($result &&  $result->{events}) {
         my $events = $result->{events}{event};
