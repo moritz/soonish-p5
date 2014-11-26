@@ -19,8 +19,9 @@ binmode STDOUT, ':encoding(UTF-8)';
 my $VERBOSE = 1;
 
 GetOptions(
-    'a|all'    => \my $All,
-    'q|quiet!' => sub { $VERBOSE = 0 },
+    'a|all'        => \my $All,
+    'q|quiet!'     => sub { $VERBOSE = 0 },
+    'i|interval=i' => \my $Interval,
 );
 
 my $model = model();
@@ -64,4 +65,5 @@ for my $artist (@ARGV) {
             say $event->id if $VERBOSE && $event;
         }
     }
+    sleep $Interval if $Interval;
 }
