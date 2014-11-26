@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 use 5.014;
 use strict;
 use warnings;
@@ -8,14 +9,27 @@ use lib 'lib';
 use Soonish qw(config model);
 use Net::LastFM;
 use Encode qw(decode_utf8);
+use Getopt::Long;
 use Data::Dumper;
 
 binmode STDOUT, ':encoding(UTF-8)';
 
-@ARGV or die "Usage: $0 <artist>\n";
+@ARGV or die "Usage: $0 -a|<artist>\n";
 
+my $VERBOSE = 1;
+
+GetOptions(
+    'a|all'    => \my $All,
+    'q|quiet!' => sub { $VERBOSE = 0 },
+);
 
 my $model = model();
+
+if ($All) {
+    $VERBOSE = 0;
+    @ARGV = map $_->name, $model->artist->search(undef, {columns => ['name']})->all;
+}
+
 my $lastfm = Net::LastFM->new(
     api_key    => config(lastfm => 'key'),
     api_secret => config(lastfm => 'secret'),
@@ -25,7 +39,7 @@ use JSON qw(encode_json);
 
 for my $artist (@ARGV) {
     $artist = decode_utf8 $artist;
-    say "Artist: $artist";
+    say "Artist: $artist" if $VERBOSE;
 
     my $result = eval {
         $lastfm->request(
@@ -47,7 +61,7 @@ for my $artist (@ARGV) {
         }
         for my $ev ( @$events ) {
             my $event = $model->event->autovivify_from_lastfm($ev);
-            say $event->id if $event;
+            say $event->id if $VERBOSE && $event;
         }
     }
 }
