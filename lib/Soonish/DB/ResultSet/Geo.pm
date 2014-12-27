@@ -23,7 +23,7 @@ sub autosearch {
     else {
         # TODO: escaping of $term?
         return $self->search(
-            { plzort99 => { like => "$term%" } },
+            { plzort99 => { ilike => "$term%" } },
             {
                 order_by => 'plzort99',
                 rows     => 25,
